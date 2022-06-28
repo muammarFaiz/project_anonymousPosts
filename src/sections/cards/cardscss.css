@@ -1,0 +1,10 @@
+.cardwrap {
+  padding: 10px 30px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+}
+.card {
+  padding: 0px 10px 5px;
+  border: 1px solid black;
+}

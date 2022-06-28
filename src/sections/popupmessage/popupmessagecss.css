@@ -1,0 +1,16 @@
+.popupmessage_blockingbackground {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(0, 0, 0, 0.3);
+  position: absolute;
+  top: 0px;
+  display: grid;
+  justify-content: center;
+}
+.popupmessage {
+  box-shadow: 4px 4px 16px 0px black;
+  width: 400px;
+  height: fit-content;
+  margin: auto;
+  padding: 10px 20px;
+}
