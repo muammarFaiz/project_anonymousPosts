@@ -28,4 +28,3 @@ export default function Register() {
     </form>
   )
 }
-// now try to reject a duplicate email in the database

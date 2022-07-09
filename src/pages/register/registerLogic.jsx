@@ -22,6 +22,7 @@ export default function RegisterLogic() {
 
   const formOnsubmit = async (val) => {
     val.preventDefault();
+    memory.setHomeLoading(true)
     let result
     try {
       result = await req('register', 'POST', {
@@ -38,6 +39,7 @@ export default function RegisterLogic() {
           description: result.errors[0].msg
         })
       }
+      memory.setHomeLoading(false)
     } catch (error) {
       console.log(error);
       alert(error.message)

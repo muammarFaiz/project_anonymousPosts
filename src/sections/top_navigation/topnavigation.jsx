@@ -18,7 +18,7 @@ export default function Top_navigation(props) {
         {
           memory.loginStatus === 'ok' ?
           <>
-          <Link to="/#" className='loginButton buttonAnchor'>Your posts</Link>
+          <Link to="/profile" className='loginButton buttonAnchor'>Profile</Link>
           <Link to="/#" className='buttonAnchor' onClick={logic.logout}>Logout</Link>
           </> :
             memory.loginStatus === 'loading' ?
@@ -30,6 +30,14 @@ export default function Top_navigation(props) {
         }
       </div>
     </div>
+    {
+      memory.homeLoading ?
+        <div className="homeLoading">
+          <div className="homeLoadingMain">
+            <p>Loading...</p>
+          </div>
+        </div> : ''
+    }
     </>
   )
 }

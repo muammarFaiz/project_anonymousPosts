@@ -1,27 +1,44 @@
 import './App.css';
-import Topnavigation from './sections/top_navigation/topnavigation';
-import Cards from './sections/cards/cards'
-import {Outlet} from 'react-router-dom'
-import { createContext, useState } from 'react';
+import { createContext } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import AppLogic from './appLogic';
-import Popupmessage from './sections/popupmessage/popupmessage';
+import Ground from './appGround';
+import Home from './pages/home/home';
+import Login from './pages/login/login';
+import Register from './pages/register/register';
+import Profile from './pages/profile/profile';
 
 export const Context = createContext();
 
 function App() {
   const memory = AppLogic();
   return (
-    <Context.Provider value={memory}>
-    <div className="App">
-      <header className="App-header">
-        <Topnavigation />
-      </header>
-      <main>
-        <Popupmessage />
-        <Outlet />
-      </main>
-    </div>
-    </Context.Provider>
+    // <React.StrictMode>
+    <BrowserRouter>
+        {
+          memory.loginStatus === 'loading' ?
+            <h1>Loading...</h1> :
+            <Context.Provider value={memory}>
+              <Routes>
+                <Route path="/" element={<Ground />}>
+                  <Route index element={<Home />} />
+                  {
+                    memory.loginStatus === 'ok' ?
+                    <>
+                      <Route path='profile' element={<Profile />} />
+                    </> :
+                    <>
+                      <Route path="login" element={<Login />} />
+                      <Route path="register" element={<Register />} />
+                    </>
+                  }
+                  <Route path="*" element={<Navigate to={'/'} />} />
+                </Route>
+              </Routes>
+            </Context.Provider>
+        }
+    </BrowserRouter>
+    // </React.StrictMode >
   );
 }
 

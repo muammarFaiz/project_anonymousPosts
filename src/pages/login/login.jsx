@@ -4,7 +4,6 @@ import { Context } from "../../App";
 
 export default function Login() {
   const logic = LoginLogic();
-  const memory = useContext(Context);
 
   return (
     <form onSubmit={logic.formOnsubmit}>

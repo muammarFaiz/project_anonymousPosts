@@ -5,9 +5,10 @@ export default function AppLogic() {
   const [loginStatus, setLoginStatus] = useState('loading')
   const [popupmessageStatus, setPopupmessageStatus] = useState(false)
   const [messageContent, setMessageContent] = useState('')
+  const [homeLoading, setHomeLoading] = useState('')
 
   useEffect( () => {
-    console.log('useeffect running');
+    console.log('useeffect for verifytoken is running');
     const token = localStorage.getItem('token')
     if(token) {
       let result;
@@ -39,6 +40,7 @@ export default function AppLogic() {
   return {
     loginStatus, setLoginStatus,
     popupmessageStatus, setPopupmessageStatus,
-    messageContent, setMessageContent
+    messageContent, setMessageContent,
+    homeLoading, setHomeLoading
   }
 }
