@@ -1,6 +1,8 @@
-import {BsTrash} from 'react-icons/bs'
 import Button from '../../customComponents/button'
+import Card from '../../sections/cards/card'
 import ProfileLogic from './profilelogic'
+
+import './profilecss.css'
 
 export default function Profile() {
   const logic = ProfileLogic()
@@ -8,20 +10,14 @@ export default function Profile() {
   const posts = () => {
     if(logic.loading) {
       return <h1>Loading...</h1>
+    } else if(logic.secretArr.length < 1) {
+      return <p>no secret found...</p>
     } else {
       let examplePostArr = []
       for(let i = 0; i < logic.secretArr.length; i++) {
         const secret = logic.secretArr[i]
         examplePostArr.push(
-          <div className="yourposts_post" key={i}>
-            <div className="yourposts_content">
-              <p>{secret.content}</p>
-            </div>
-            <div className="yourposts_bottom">
-              <div className="yourposts_dateCreated"> date created: {secret.date_created}</div>
-              <Button className="yourposts_deleteButton" onClick={() => logic.deleteSecret(secret.n)}><BsTrash /></Button>
-            </div>
-          </div>
+          <Card card={secret} key={i} profile={true} />
         )
       }
       return examplePostArr
@@ -31,11 +27,15 @@ export default function Profile() {
   return (
     <div className="profile">
       <div className="createPost">
-        <textarea cols="30" rows="10" onChange={logic.editTextarea} value={logic.textarea}></textarea>
-        <Button className="createPost_button" onClick={logic.createPost}>Post</Button>
+        <div className="createpost-inputwrapper">
+          <textarea cols="30" rows="6" onChange={logic.editTextarea} value={logic.textarea}></textarea>
+          <Button className="createPost_button" onClick={logic.createPost}>Post</Button>
+        </div>
       </div>
       <div className="yourposts">
-        {posts()}
+        <div className="cardwrap">
+          {posts()}
+        </div>
       </div>
       <div className='profilePaginationWrap'>
         {logic.setPageGroup()}

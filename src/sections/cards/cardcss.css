@@ -1,0 +1,14 @@
+.card-control-flex {
+  display: flex;
+  justify-content: space-between;
+}
+.votesNumberSpan {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.card-control-flex {
+  margin-top: 10px;
+}
+.card-createdDate {
+  margin-top: 30px;
+}

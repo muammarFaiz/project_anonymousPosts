@@ -32,8 +32,14 @@ export default function CardLogic(props) {
     }
     memory.setHomeLoading(false)
   }
+
+  const deleteSecret = async (n) => {
+    memory.setProfileLoading(n)
+  }
+
   return {
     vote,
-    votes, setVotes
+    votes, setVotes,
+    deleteSecret
   }
 }

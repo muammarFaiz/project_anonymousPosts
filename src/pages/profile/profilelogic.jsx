@@ -1,4 +1,6 @@
+import { useContext } from "react"
 import { useEffect, useState } from "react"
+import { Context } from "../../App"
 import req from "../../axiosSetup"
 
 const c = console.log
@@ -8,8 +10,8 @@ export default function ProfileLogic() {
   const [secretArr, setSecretArr] = useState('')
   const [loading, setLoading] = useState('init')
   const [demandedPage, setDemandedPage] = useState('init')
-  
   const [arrayOfPageNumber, setArrayOfPageNumber] = useState([])
+  const memory = useContext(Context)
 
   const createPost = async () => {
     setLoading(true)
@@ -27,7 +29,10 @@ export default function ProfileLogic() {
   }
 
   useEffect(() => {
-    if(loading === 'init' || loading === 'new secret added' || loading === 'secret deleted' || loading === 'change page') {
+    if(loading === 'init' ||
+    loading === 'new secret added' ||
+    loading === 'secret deleted' ||
+    loading === 'change page') {
       const getUserSecrets = async () => {
         c('getUserSecrets running')
         const demandedPageNumber = demandedPage === 'init' ? 1 : demandedPage
@@ -39,17 +44,17 @@ export default function ProfileLogic() {
           } else {
             setArrayOfPageNumber(result.arrayOfPages)
           }
-          setLoading(false)
-        } else {
+        } else if(result !== 'empty') {
           alert('something is wrong, result key not found in server response')
-          setLoading(false)
         }
+        setLoading(false)
       }
       getUserSecrets()
     }
   }, [loading, demandedPage])
 
   const deleteSecret = async (n) => {
+    c('deleteSecret running...')
     setLoading(true)
     const result = await req('deletesecret', 'POST', {secretNumber: n})
     if(result === 'ok') {
@@ -58,7 +63,12 @@ export default function ProfileLogic() {
       alert('failed to delete secret')
     }
   }
-
+  useEffect(() => {
+    if(memory.profileLoading) {
+      deleteSecret(memory.profileLoading)
+    }
+  }, [memory.profileLoading])
+  
   const setPageGroup = () => {
     let buttonArr = []
     for (let i = 0; i < arrayOfPageNumber.length; i++) {
@@ -76,7 +86,6 @@ export default function ProfileLogic() {
     createPost,
     secretArr,
     loading,
-    deleteSecret,
     setPageGroup
   }
 }

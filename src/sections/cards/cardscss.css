@@ -9,3 +9,17 @@
   /* border: 1px solid black; */
   background-color: #E0D4AD;
 }
+.nextpageWrap {
+  padding-left: 50px;
+}
+.nextpageWrap button {
+  width: 200px;
+  height: 40px;
+  background: none;
+  border-radius: 30px;
+  border-width: 3px;
+  border-style: double;
+}
+.nextpageWrap button:hover {
+  border-color: darkviolet;
+}

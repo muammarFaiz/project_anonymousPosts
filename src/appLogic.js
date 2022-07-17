@@ -6,6 +6,8 @@ export default function AppLogic() {
   const [popupmessageStatus, setPopupmessageStatus] = useState(false)
   const [messageContent, setMessageContent] = useState('')
   const [homeLoading, setHomeLoading] = useState('')
+  const [profileLoading, setProfileLoading] = useState('')
+  const [homepagePostSecret, setHomepagePostSecret] = useState('init')
 
   useEffect( () => {
     console.log('useeffect for verifytoken is running');
@@ -41,6 +43,8 @@ export default function AppLogic() {
     loginStatus, setLoginStatus,
     popupmessageStatus, setPopupmessageStatus,
     messageContent, setMessageContent,
-    homeLoading, setHomeLoading
+    homeLoading, setHomeLoading,
+    profileLoading, setProfileLoading,
+    homepagePostSecret, setHomepagePostSecret
   }
 }

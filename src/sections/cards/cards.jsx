@@ -26,7 +26,7 @@ export default function Cards() {
         {c()}
       </div>
       <div className="nextpageWrap">
-        <button onClick={() => logic.setNextpage('next')}><AiOutlineArrowRight /></button>
+        <button onClick={() => logic.nextpage()}><AiOutlineArrowRight size={25} /></button>
       </div>
     </>
   )

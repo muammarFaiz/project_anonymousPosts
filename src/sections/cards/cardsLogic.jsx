@@ -4,41 +4,58 @@ import req from "../../axiosSetup"
 
 const CardsLogic = () => {
   const [homeCards, setHomeCards] = useState([])
-  const [nextpage, setNextpage] = useState('init')
+  const [askCards, setAskCards] = useState('init')
   const memory = useContext(Context)
   // just to avoid babel warning:
   const sethomeloading = memory.setHomeLoading;
+  const homepagePostSecret = memory.homepagePostSecret;
+  const setHomepagePostSecret = memory.setHomepagePostSecret;
 
   useEffect(() => {
+    console.log(homepagePostSecret);
+    console.log(askCards);
     let query
-    console.log('cardslogic running, state deps: nextpage, homeCards, memory.setHomeLoading');
-    if(nextpage === 'next') {
+    if(askCards === 'next') {
       sethomeloading(true)
       query = {idIndex: homeCards[homeCards.length - 1]._id}
-    } else if(nextpage === 'init') {
+    } else if(askCards === 'init' || homepagePostSecret === 'secret posted') {
+      sethomeloading(true)
       query = undefined
     }
-    if(nextpage === 'next' || nextpage === 'init') {
+    if(askCards === 'next' ||
+    askCards === 'init' ||
+    homepagePostSecret === 'secret posted') {
       const runthis = async () => {
+        console.log('retreiving secrets...');
         const result = await req('getsecrets', 'GET', undefined, query)
         if(result.result) {
-          setHomeCards(prev => {
-            const a = [...prev]
-            a.push(...result.result)
-            return a
-          })
+          if(homepagePostSecret === 'secret posted') {
+            setHomeCards(result.result)
+            setHomepagePostSecret('done')
+          } else {
+            setHomeCards(prev => {
+              const a = [...prev]
+              a.push(...result.result)
+              return a
+            })
+            setAskCards('done')
+          }
+        } else {
+          alert('failed in retreiving secrets')
         }
       }
       runthis()
       sethomeloading(false)
-      setNextpage('done')
     }
-  }, [nextpage, homeCards, sethomeloading])
+  }, [askCards, setAskCards, homeCards, sethomeloading, homepagePostSecret, setHomepagePostSecret])
 
+  const nextpage = () => {
+    setAskCards('next')
+  }
 
   return {
     homeCards,
-    setNextpage
+    nextpage
   }
 }
 export default CardsLogic

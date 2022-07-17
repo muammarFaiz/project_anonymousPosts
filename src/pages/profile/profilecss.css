@@ -1,0 +1,16 @@
+.profilePaginationWrap {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+.profilePaginationWrap button {
+  width: 35px;
+}
+.createPost {
+  display: flex;
+  justify-content: center;
+}
+.createpost-inputwrapper {
+  display: flex;
+  padding-top: 50px;
+}
