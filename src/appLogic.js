@@ -8,6 +8,7 @@ export default function AppLogic() {
   const [homeLoading, setHomeLoading] = useState('')
   const [profileLoading, setProfileLoading] = useState('')
   const [homepagePostSecret, setHomepagePostSecret] = useState('init')
+  const [capslock, setCapslock] = useState('')
 
   useEffect( () => {
     console.log('useeffect for verifytoken is running');
@@ -37,14 +38,28 @@ export default function AppLogic() {
       setPopupmessageStatus(true)
     }
   }, [messageContent])
-  // it is working, now the problem will be how to disable all the button, anchor and input when message popup?
   
+  const capsPressed = (v) => {
+    const capsStatus = v.getModifierState('CapsLock')
+    if(capsStatus) {
+      if(!capslock) {
+        setCapslock(true)
+      }
+    } else {
+      if(capslock) {
+        setCapslock(false)
+      }
+    }
+  }
+
   return {
     loginStatus, setLoginStatus,
     popupmessageStatus, setPopupmessageStatus,
     messageContent, setMessageContent,
     homeLoading, setHomeLoading,
     profileLoading, setProfileLoading,
-    homepagePostSecret, setHomepagePostSecret
+    homepagePostSecret, setHomepagePostSecret,
+    capslock,
+    capsPressed
   }
 }

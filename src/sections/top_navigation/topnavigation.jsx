@@ -1,5 +1,5 @@
 import './topnavcss.css'
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import { useContext } from 'react';
 import { Context } from '../../App';
 import Topnavlogic from './topnavlogic';
@@ -7,12 +7,15 @@ import Topnavlogic from './topnavlogic';
 export default function Top_navigation(props) {
   const memory = useContext(Context)
   const logic = Topnavlogic();
+  const navigate = useNavigate()
 
   return (
     <>
     <div className="topnavigation">
       <div className="logo">
-        <h1>R</h1>
+        <h1 onClick={() => navigate('/')} tabIndex={0} onKeyUp={v => {
+          if(v.key === 'Enter') navigate('/')
+        }}>R</h1>
       </div>
       <div className="loginReg">
         {
@@ -37,6 +40,14 @@ export default function Top_navigation(props) {
             <p>Loading...</p>
           </div>
         </div> : ''
+    }
+    {
+      memory.capslock ?
+      <div className="capsNotif">
+        <div className="capsNotifMain">
+          <p>CapsLock is on</p>
+        </div>
+      </div> : ''
     }
     </>
   )
