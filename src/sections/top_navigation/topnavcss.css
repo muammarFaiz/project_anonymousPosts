@@ -12,22 +12,14 @@
   padding: 5px 18px 10px 18px;
   cursor: pointer;
   text-decoration: none;
-  /* color: #E0D4AD; */
-  color: black;
+  color: #E0D4AD;
+  /* color: black; */
   margin: auto;
 }
 .logo > h1 {
   font-size: 40px;
   cursor: pointer;
 }
-/* how about we try to incorporate a simple text editor
-like most social should have?
-1. is there any free library for it?
-2. is there any tutorial how to use it on youtube? */
-
-/* after that find out if the capslock activated when user
-typing */
-
 /* after that lets try to incorporate a profile image
 and how to save it inside mongodb?? */
 
@@ -35,17 +27,15 @@ and how to save it inside mongodb?? */
   display: flex;
 }
 .homeLoading {
-  text-align: center;
-  position: fixed;
-  width: 98.4vw;
+  display: flex;
+  justify-content: center;
 }
 .homeLoadingMain {
   color: whitesmoke;
   background-color: rgb(26, 26, 26);
-  width: 11%;
-  margin: 2px auto 0px auto;
   border-radius: 5px;
   padding-bottom: 6px;
+  padding: 0px 10px 6px;
 }
 
 .capsNotif {
@@ -55,4 +45,10 @@ and how to save it inside mongodb?? */
 .capsNotifMain {
   text-align: center;
   padding: 5px 5px;
+}
+
+.topnav-wrapper {
+  position: fixed;
+  z-index: 1;
+  width: 100vw;
 }

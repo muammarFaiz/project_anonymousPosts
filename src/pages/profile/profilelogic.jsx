@@ -6,33 +6,21 @@ import req from "../../axiosSetup"
 const c = console.log
 
 export default function ProfileLogic() {
-  const [textarea, setTextarea] = useState('')
   const [secretArr, setSecretArr] = useState('')
   const [loading, setLoading] = useState('init')
   const [demandedPage, setDemandedPage] = useState('init')
   const [arrayOfPageNumber, setArrayOfPageNumber] = useState([])
   const memory = useContext(Context)
 
-  const createPost = async () => {
-    setLoading(true)
-    const result = await req('postsecret', 'POST', {content: textarea})
-    console.log(result);
-    if(result === 'ok') {
-      setLoading('new secret added')
-      setTextarea('')
-    } else {
-      alert('failed to create post')
-    }
-  }
-  const editTextarea = (val) => {
-    setTextarea(val.target.value)
-  }
-
+  const homepagePostSecret = memory.homepagePostSecret
+  const setHomepagePostSecret = memory.setHomepagePostSecret
   useEffect(() => {
     if(loading === 'init' ||
     loading === 'new secret added' ||
     loading === 'secret deleted' ||
-    loading === 'change page') {
+    loading === 'change page' ||
+    homepagePostSecret === 'secret posted'
+    ) {
       const getUserSecrets = async () => {
         c('getUserSecrets running')
         const demandedPageNumber = demandedPage === 'init' ? 1 : demandedPage
@@ -50,8 +38,9 @@ export default function ProfileLogic() {
         setLoading(false)
       }
       getUserSecrets()
+      setHomepagePostSecret('done')
     }
-  }, [loading, demandedPage])
+  }, [loading, demandedPage, homepagePostSecret, setHomepagePostSecret])
 
   const deleteSecret = async (n) => {
     c('deleteSecret running...')
@@ -82,8 +71,6 @@ export default function ProfileLogic() {
   }
 
   return {
-    textarea, editTextarea,
-    createPost,
     secretArr,
     loading,
     setPageGroup

@@ -11,44 +11,46 @@ export default function Top_navigation(props) {
 
   return (
     <>
-    <div className="topnavigation">
-      <div className="logo">
-        <h1 onClick={() => navigate('/')} tabIndex={0} onKeyUp={v => {
-          if(v.key === 'Enter') navigate('/')
-        }}>R</h1>
-      </div>
-      <div className="loginReg">
-        {
-          memory.loginStatus === 'ok' ?
-          <>
-          <Link to="/profile" className='loginButton buttonAnchor'>Profile</Link>
-          <Link to="/#" className='buttonAnchor' onClick={logic.logout}>Logout</Link>
-          </> :
-            memory.loginStatus === 'loading' ?
-            <Link to="/#" className='buttonAnchor'>Loading user info...</Link> :
+    <div className="topnav-wrapper">
+      <div className="topnavigation">
+        <div className="logo">
+          <h1 onClick={() => navigate('/')} tabIndex={0} onKeyUp={v => {
+            if(v.key === 'Enter') navigate('/')
+          }}>R</h1>
+        </div>
+        <div className="loginReg">
+          {
+            memory.loginStatus === 'ok' ?
             <>
-              <Link to="/login" className='loginButton buttonAnchor'>Login</Link>
-              <Link to="/register" className='registerButton buttonAnchor'>Register</Link>
-            </>
-        }
+            <Link to="/profile" className='loginButton buttonAnchor'>Profile</Link>
+            <Link to="/#" className='buttonAnchor' onClick={logic.logout}>Logout</Link>
+            </> :
+              memory.loginStatus === 'loading' ?
+              <Link to="/#" className='buttonAnchor'>Loading user info...</Link> :
+              <>
+                <Link to="/login" className='loginButton buttonAnchor'>Login</Link>
+                <Link to="/register" className='registerButton buttonAnchor'>Register</Link>
+              </>
+          }
+        </div>
       </div>
-    </div>
-    {
-      memory.homeLoading ?
-        <div className="homeLoading">
-          <div className="homeLoadingMain">
-            <p>Loading...</p>
+      {
+        memory.homeLoading ?
+          <div className="homeLoading">
+            <div className="homeLoadingMain">
+              <p>Loading...</p>
+            </div>
+          </div> : ''
+      }
+      {
+        memory.capslock ?
+        <div className="capsNotif">
+          <div className="capsNotifMain">
+            <p>CapsLock is on</p>
           </div>
         </div> : ''
-    }
-    {
-      memory.capslock ?
-      <div className="capsNotif">
-        <div className="capsNotifMain">
-          <p>CapsLock is on</p>
-        </div>
-      </div> : ''
-    }
+      }
+    </div>
     </>
   )
 }

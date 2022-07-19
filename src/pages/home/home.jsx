@@ -1,21 +1,15 @@
 import Cards from "../../sections/cards/cards"
+import InputSecret from "../../sections/inputSecret/inputSecret"
 
 import './homecss.css'
-import HomeLogic from "./homelogic"
+// import HomeLogic from "./homelogic"
 
 export default function Home() {
-  const logic = HomeLogic()
+  // const logic = HomeLogic()
 
   return (
     <>
-      <div className="home-postsomething">
-        <div className="postsomething-inputwrapper">
-          <textarea name="" id="" cols="30" rows="6" value={logic.textarea} onChange={
-            val => logic.setTextarea(val.target.value)
-          }></textarea><br />
-          <button onClick={logic.postSecret}>Post</button>
-        </div>
-      </div>
+      <InputSecret />
       <Cards />
     </>
   )

@@ -1,8 +1,8 @@
-import Button from '../../customComponents/button'
 import Card from '../../sections/cards/card'
 import ProfileLogic from './profilelogic'
 
 import './profilecss.css'
+import InputSecret from '../../sections/inputSecret/inputSecret'
 
 export default function Profile() {
   const logic = ProfileLogic()
@@ -23,15 +23,10 @@ export default function Profile() {
       return examplePostArr
     }
   }
-
+  
   return (
     <div className="profile">
-      <div className="createPost">
-        <div className="createpost-inputwrapper">
-          <textarea cols="30" rows="6" onChange={logic.editTextarea} value={logic.textarea}></textarea>
-          <Button className="createPost_button" onClick={logic.createPost}>Post</Button>
-        </div>
-      </div>
+      <InputSecret />
       <div className="yourposts">
         <div className="cardwrap">
           {posts()}
