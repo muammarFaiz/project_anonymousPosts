@@ -7,6 +7,7 @@ import Home from './pages/home/home';
 import Login from './pages/login/login';
 import Register from './pages/register/register';
 import Profile from './pages/profile/profile';
+import User from './pages/user/user';
 
 export const Context = createContext();
 
@@ -26,6 +27,7 @@ function App() {
                     memory.loginStatus === 'ok' ?
                     <>
                       <Route path='profile' element={<Profile />} />
+                      <Route path='user' element={<User />} />
                     </> :
                     <>
                       <Route path="login" element={<Login />} />

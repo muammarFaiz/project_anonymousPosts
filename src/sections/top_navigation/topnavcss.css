@@ -22,6 +22,8 @@
 }
 /* after that lets try to incorporate a profile image
 and how to save it inside mongodb?? */
+/* 1. google can i save image in mongodb */
+/* 2. axios cofig is prone to error because return unexpected data (error obj) */
 
 .loginReg {
   display: flex;

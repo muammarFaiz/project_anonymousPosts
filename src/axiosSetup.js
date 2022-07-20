@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default async function req(route, method, data_obj, query) {
+export default async function req(route, method, data_obj, query, contentType) {
   let result
   try {
     result = await axios({
@@ -8,7 +8,8 @@ export default async function req(route, method, data_obj, query) {
       method: method,
       data: data_obj,
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        'content-type': contentType
       },
       params: query
     })
