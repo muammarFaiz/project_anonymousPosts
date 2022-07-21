@@ -7,7 +7,7 @@ export default function User() {
   return (
     <div className="userProfile-wrapper">
       <div className="userPic-input">
-        <input type="file" onChange={logic.handleImg} accept='image/*' />
+        <input type="file" onChange={logic.imgOnchange} accept='image/*' />
         <button onClick={logic.sendImage}>Upload</button>
       </div>
       <div className="user-pic-wrapper">
