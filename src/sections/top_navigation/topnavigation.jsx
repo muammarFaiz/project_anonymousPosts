@@ -24,6 +24,9 @@ export default function Top_navigation(props) {
             <>
             <Link to="/profile" className='loginButton buttonAnchor'>Profile</Link>
             <Link to="/#" className='buttonAnchor' onClick={logic.logout}>Logout</Link>
+            <div className="topnav-userimage-wrapper">
+              <img src={memory.userImgSrc} alt="" onClick={v => navigate('/user')} className='topnav-userimage' />
+            </div>
             </> :
               memory.loginStatus === 'loading' ?
               <Link to="/#" className='buttonAnchor'>Loading user info...</Link> :

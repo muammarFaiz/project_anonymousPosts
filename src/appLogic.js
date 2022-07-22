@@ -9,7 +9,14 @@ export default function AppLogic() {
   const [profileLoading, setProfileLoading] = useState('')
   const [homepagePostSecret, setHomepagePostSecret] = useState('init')
   const [capslock, setCapslock] = useState('')
+  const [userImgSrc, setUserImgSrc] = useState('')
+  const [userinfo, setUserinfo] = useState('')
+  const [showChangeImg, setShowChangeImg] = useState('')
 
+  const getImgFromServer = async () => {
+    const result = await req('userimage', 'GET')
+    setUserImgSrc('data:' + result.mimetype + ';base64,' + result.base64)
+  }
   useEffect( () => {
     console.log('useeffect for verifytoken is running');
     const token = localStorage.getItem('token')
@@ -17,9 +24,10 @@ export default function AppLogic() {
       let result;
       async function fetchdata() {
         result = await req('verifytoken', 'GET', null)
-        if(result === 'ok') {
+        if(result.status === 'ok') {
           console.log('token accepted');
           setLoginStatus('ok')
+          setUserinfo(result.userinfo)
         } else {
           console.log('token rejected');
           setLoginStatus('rejected')
@@ -30,6 +38,7 @@ export default function AppLogic() {
       console.log('user does not have token');
       setLoginStatus('rejected')
     }
+    getImgFromServer()
   }, [])
 
   useEffect(() => {
@@ -60,6 +69,9 @@ export default function AppLogic() {
     profileLoading, setProfileLoading,
     homepagePostSecret, setHomepagePostSecret,
     capslock,
-    capsPressed
+    capsPressed,
+    userImgSrc, setUserImgSrc,
+    userinfo,
+    showChangeImg, setShowChangeImg
   }
 }

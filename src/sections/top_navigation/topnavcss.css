@@ -54,3 +54,15 @@ and how to save it inside mongodb?? */
   z-index: 1;
   width: 100vw;
 }
+.topnav-userimage-wrapper {
+  width: 55px;
+  padding-top: 6px;
+}
+.topnav-userimage {
+  width: 40px;
+  border-radius: 25px;
+  height: 40px;
+}
+.topnav-userimage:hover {
+  cursor: pointer;
+}
