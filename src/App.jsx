@@ -13,6 +13,7 @@ export const Context = createContext();
 
 function App() {
   const memory = AppLogic();
+  console.log('**********************app element render');
   return (
     // <React.StrictMode>
     <BrowserRouter>

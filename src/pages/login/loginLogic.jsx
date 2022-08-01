@@ -17,6 +17,7 @@ export default function LoginLogic() {
       if(result.token) {
         localStorage.setItem('token', result.token)
         memory.setLoginStatus('ok')
+        memory.setUserinfo(result.userinfo)
         navigate('/')
       } else {
         alert(`fail: ${result}`)

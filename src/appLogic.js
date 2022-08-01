@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import req from "./axiosSetup";
 
 export default function AppLogic() {
@@ -6,19 +6,22 @@ export default function AppLogic() {
   const [popupmessageStatus, setPopupmessageStatus] = useState(false)
   const [messageContent, setMessageContent] = useState('')
   const [homeLoading, setHomeLoading] = useState('')
-  const [profileLoading, setProfileLoading] = useState('')
-  const [homepagePostSecret, setHomepagePostSecret] = useState('init')
+  const [deleteSecretN, setDeleteSecretN] = useState('')
+  const [poststatus, setpoststatus] = useState('')
+  const postSecretStatus = useRef(null)
   const [capslock, setCapslock] = useState('')
   const [userImgSrc, setUserImgSrc] = useState('')
   const [userinfo, setUserinfo] = useState('')
   const [showChangeImg, setShowChangeImg] = useState('')
+  const [showEditProfile, setShowEditProfile] = useState('')
+  const mainLoading = useRef(null)
 
   const getImgFromServer = async () => {
     const result = await req('userimage', 'GET')
+    console.log('img received');
     setUserImgSrc('data:' + result.mimetype + ';base64,' + result.base64)
   }
   useEffect( () => {
-    console.log('useeffect for verifytoken is running');
     const token = localStorage.getItem('token')
     if(token) {
       let result;
@@ -38,8 +41,11 @@ export default function AppLogic() {
       console.log('user does not have token');
       setLoginStatus('rejected')
     }
-    getImgFromServer()
   }, [])
+
+  useEffect(() => {
+    if(loginStatus === 'ok') getImgFromServer()
+  }, [loginStatus])
 
   useEffect(() => {
     if(messageContent !== '') {
@@ -66,12 +72,16 @@ export default function AppLogic() {
     popupmessageStatus, setPopupmessageStatus,
     messageContent, setMessageContent,
     homeLoading, setHomeLoading,
-    profileLoading, setProfileLoading,
-    homepagePostSecret, setHomepagePostSecret,
+    deleteSecretN, setDeleteSecretN,
+    // homepagePostSecret, setHomepagePostSecret,
+    postSecretStatus,
     capslock,
     capsPressed,
     userImgSrc, setUserImgSrc,
-    userinfo,
-    showChangeImg, setShowChangeImg
+    userinfo, setUserinfo,
+    showChangeImg, setShowChangeImg,
+    poststatus, setpoststatus,
+    showEditProfile, setShowEditProfile,
+    mainLoading
   }
 }

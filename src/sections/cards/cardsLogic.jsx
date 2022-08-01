@@ -1,37 +1,35 @@
 import { useContext, useEffect, useState } from "react"
 import { Context } from "../../App"
 import req from "../../axiosSetup"
+import Card from './card'
 
-const CardsLogic = () => {
+const CardsLogic = (cardslocation) => {
   const [homeCards, setHomeCards] = useState([])
   const [askCards, setAskCards] = useState('init')
   const memory = useContext(Context)
+
   // just to avoid babel warning:
   const sethomeloading = memory.setHomeLoading;
-  const homepagePostSecret = memory.homepagePostSecret;
-  const setHomepagePostSecret = memory.setHomepagePostSecret;
+  const postSecretStatus = memory.postSecretStatus.current;
 
   useEffect(() => {
-    console.log(homepagePostSecret);
-    console.log(askCards);
     let query
     if(askCards === 'next') {
-      sethomeloading(true)
       query = {idIndex: homeCards[homeCards.length - 1]._id}
-    } else if(askCards === 'init' || homepagePostSecret === 'secret posted') {
-      sethomeloading(true)
+    } else if (askCards === 'init' || postSecretStatus === 'secret posted') {
       query = undefined
     }
     if(askCards === 'next' ||
     askCards === 'init' ||
-    homepagePostSecret === 'secret posted') {
+      postSecretStatus === 'secret posted') {
       const runthis = async () => {
-        console.log('retreiving secrets...');
+        sethomeloading(true)
         const result = await req('getsecrets', 'GET', undefined, query)
         if(result.result) {
-          if(homepagePostSecret === 'secret posted') {
+          console.log('secrets retreived');
+          if (postSecretStatus === 'secret posted') {
             setHomeCards(result.result)
-            setHomepagePostSecret('done')
+            memory.postSecretStatus.current = 'done'
           } else {
             setHomeCards(prev => {
               const a = [...prev]
@@ -43,18 +41,35 @@ const CardsLogic = () => {
         } else {
           alert('failed in retreiving secrets')
         }
+        sethomeloading(false)
       }
       runthis()
-      sethomeloading(false)
     }
-  }, [askCards, setAskCards, homeCards, sethomeloading, homepagePostSecret, setHomepagePostSecret])
+  }, [askCards, setAskCards, homeCards, sethomeloading, postSecretStatus, memory.postSecretStatus])
 
   const nextpage = () => {
     setAskCards('next')
   }
 
+  const c = () => {
+    let arr = []
+    if (homeCards.length === 0) {
+      console.log('state homeCards secrets length = 0');
+      arr.push(<h1 key={0}>Loadinggg...</h1>)
+    } else {
+      console.log('cards for homepage create cards');
+      for (let i = 0; i < homeCards.length; i++) {
+        const card = homeCards[i]
+        arr.push(
+          <Card card={card} key={i} />
+        )
+      }
+    }
+    return arr
+  }
+
   return {
-    homeCards,
+    c,
     nextpage
   }
 }

@@ -1,29 +1,15 @@
 import './cardscss.css'
 import cardsLogic from './cardsLogic'
 import { AiOutlineArrowRight } from 'react-icons/ai'
-import Card from './card'
 
-export default function Cards() {
-  const logic = cardsLogic()
 
-  const c = () => {
-    let arr = []
-    if(logic.homeCards.length === 0) {
-      arr.push(<h1 key={0}>Loadinggg...</h1>)
-    } else {
-      for(let i = 0; i < logic.homeCards.length; i++) {
-        const card = logic.homeCards[i]
-        arr.push(
-          <Card card={card} key={i} />
-        )
-      }
-    }
-    return arr
-  }
+export default function Cards({cardslocation}) {
+  const logic = cardsLogic(cardslocation)
+
   return (
     <>
       <div className="cardwrap">
-        {c()}
+        {logic.c()}
       </div>
       <div className="nextpageWrap">
         <button onClick={() => logic.nextpage()}><AiOutlineArrowRight size={25} /></button>

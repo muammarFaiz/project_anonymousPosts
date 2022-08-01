@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../../App";
 import req from "../../axiosSetup";
@@ -5,6 +6,7 @@ import req from "../../axiosSetup";
 export default function CardLogic(props) {
   const memory = useContext(Context)
   const [votes, setVotes] = useState('')
+  const audioB64 = useRef(null)
 
   useEffect(() => {
     if (props.card.vote_count === undefined || props.card.vote_count === 'init') {
@@ -12,7 +14,8 @@ export default function CardLogic(props) {
     } else {
       setVotes(parseInt(props.card.vote_count, 10))
     }
-  }, [props.card.vote_count])
+    if(props.card.audio) arrBuffToUrlObj(props.card.audio.buffer, props.card.audio.mimetype)
+  }, [props.card.vote_count, props.card.audio])
 
   const vote = async (action, id) => {
     memory.setHomeLoading(true)
@@ -34,12 +37,24 @@ export default function CardLogic(props) {
   }
 
   const deleteSecret = async (n) => {
-    memory.setProfileLoading(n)
+    memory.setDeleteSecretN(n)
+  }
+
+  const arrBuffToUrlObj = (ab, mime) => {
+    // console.log(typeof(ab));
+    // console.log(mime);
+    // const unsigned_intArr = new Uint8Array(ab)
+    // console.log(unsigned_intArr);
+    // const _blob = new Blob(unsigned_intArr, {type: mime})
+    // console.log(_blob);
+    // audioURL.current = URL.createObjectURL(_blob)
+    audioB64.current = `data:${mime};base64,${ab}`
   }
 
   return {
     vote,
     votes, setVotes,
-    deleteSecret
+    deleteSecret,
+    audioB64
   }
 }

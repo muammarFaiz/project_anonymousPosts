@@ -1,0 +1,17 @@
+/* - bright:
+    - #FADE73
+    - #41FAE1
+    - #FA5AF4
+- dark:
+    - #AD2DA9
+    - #36AD9E */
+
+.bright {
+    color: #FADE73;
+    color: #41FAE1;
+    color: #FA5AF4;
+}
+.dark {
+    color: #AD2DA9;
+    color: #36AD9E;
+}

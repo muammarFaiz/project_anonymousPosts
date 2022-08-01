@@ -12,3 +12,6 @@
 .card-createdDate {
   margin-top: 30px;
 }
+.card-upvote:hover, .card-downvote:hover {
+  cursor: pointer;
+}

@@ -1,6 +1,15 @@
 import axios from 'axios';
 
-export default async function req(route, method, data_obj, query, contentType) {
+/**
+ * axios request
+ * @param {String} route without the / in the beginning
+ * @param {String} method all capital letter
+ * @param {obj} data_obj object for the req.body in express
+ * @param {obj} query object for the req.param in express
+ * @param {String} contentType the contentType header, usualy "multipart/form-data" default to "x-www-form-urlencoded"
+ * @returns if error return {error: 'something'} else return result.data
+ */
+async function req(route, method, data_obj, query, contentType) {
   let result
   try {
     result = await axios({
@@ -15,12 +24,12 @@ export default async function req(route, method, data_obj, query, contentType) {
     })
   } catch (error) {
     console.log(error);
-    return {error: 'request error'}
+    return { error: 'request error' }
   }
   const statusOk = result && result.status === 200 && result.statusText === 'OK';
-  if(statusOk) {
-    if(result.data.errors) {
-      return {error: result.data}
+  if (statusOk) {
+    if (result.data.errors) {
+      return { error: result.data }
     } else {
       return result.data;
     }
@@ -28,3 +37,5 @@ export default async function req(route, method, data_obj, query, contentType) {
     console.log('status is not ok???');
   }
 }
+
+export default req

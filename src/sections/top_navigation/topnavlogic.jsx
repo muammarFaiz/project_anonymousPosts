@@ -10,12 +10,16 @@ export default function Topnavlogic() {
     console.log(result)
     if(result === 'token deleted' || result === 'token null') {
       memory.setLoginStatus('')
+      memory.setUserImgSrc('')
       localStorage.removeItem('token')
+      if(result === 'token null') alert('token null')
       alert('logout success')
     } else {
       console.log(result)
+      alert('something is wrong')
     }
   }
+
   return {
     logout
   }

@@ -6,6 +6,7 @@ export default function UserLogic() {
 
   const hideImgInput = e => {
     memory.setShowChangeImg(false)
+    memory.setShowEditProfile(false)
   }
 
   const removeBubling = e => {
