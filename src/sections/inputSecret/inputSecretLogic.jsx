@@ -2,6 +2,8 @@ import { useRef } from "react"
 import { useContext, useState } from "react"
 import { Context } from "../../App";
 import req from "../../axiosSetup";
+import { useDispatch } from "react-redux/es/hooks/useDispatch";
+import { mainLoadingSwitch } from "../../reduxSlices/mainstates/mainstates";
 
 
 export default function InputSecretLogic() {
@@ -12,9 +14,11 @@ export default function InputSecretLogic() {
   const audioChunks = useRef([])
   const [audioElem, setAudioElem] = useState('')
   const [recordButton, setRecordButton] = useState(true)
+  const dispatch = useDispatch()
   
   const postSecret = async () => {
-    memory.setHomeLoading(true)
+    // memory.setHomeLoading(true)
+    dispatch(mainLoadingSwitch())
     if (editorRef.current) {
       const content = editorRef.current.getContent()
       console.log(content);
@@ -23,7 +27,8 @@ export default function InputSecretLogic() {
       console.log(audioBlob);
 
       if(!content && !audioBlob) {
-        memory.setHomeLoading(false)
+        // memory.setHomeLoading(false)
+        dispatch(mainLoadingSwitch())
         memory.setPopupmessageStatus(true)
         memory.setMessageContent({title: 'denied', description: 'there is nothing to send'})
         return
@@ -48,7 +53,8 @@ export default function InputSecretLogic() {
     } else {
       alert('editor is not loaded')
     }
-    memory.setHomeLoading(false)
+    // memory.setHomeLoading(false)
+    dispatch(mainLoadingSwitch())
   }
 
   const editorOnInit = (evt, editor) => editorRef.current = editor
@@ -63,7 +69,8 @@ export default function InputSecretLogic() {
       }
       audioMediaRecorder.onstop = event => {
         stream.getTracks().forEach(track => track.stop())
-        memory.setHomeLoading(true)
+        // memory.setHomeLoading(true)
+        dispatch(mainLoadingSwitch())
         const audioBlob = new Blob(audioChunks.current, {type: audioChunks.current[0].type})
         console.log(audioBlob);
         setAudioElem(
@@ -73,7 +80,8 @@ export default function InputSecretLogic() {
           </>
         )
         setDirty(true)
-        memory.setHomeLoading(false)
+        // memory.setHomeLoading(false)
+        dispatch(mainLoadingSwitch())
         setRecordButton(true)
       }
       audioMediaRecorder.start()

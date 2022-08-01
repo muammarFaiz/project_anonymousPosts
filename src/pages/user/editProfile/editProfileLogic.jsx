@@ -3,11 +3,14 @@ import { useContext } from "react"
 import { useState } from "react"
 import { Context } from "../../../App"
 import req from "../../../axiosSetup"
+import { useDispatch } from "react-redux/es/exports"
+import { setLoginStatus } from "../../../reduxSlices/mainstates/mainstates"
 
 export default function EditProfileLogic() {
   const [editProfileLoading, setEditProfileLoading] = useState('')
   const inputElem = useRef(null)
   const memory = useContext(Context)
+  const dispatch = useDispatch()
 
   const changeUsername = async () => {
     const newName = inputElem.current.value
@@ -24,7 +27,8 @@ export default function EditProfileLogic() {
         inputElem.current.value = ''
       } else {
         alert('token rejected')
-        memory.setLoginStatus('rejected')
+        // memory.setLoginStatus('rejected')
+        dispatch(setLoginStatus('rejected'))
       }
       alert(result.status)
     }

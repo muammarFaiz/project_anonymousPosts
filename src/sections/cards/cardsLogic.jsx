@@ -2,14 +2,17 @@ import { useContext, useEffect, useState } from "react"
 import { Context } from "../../App"
 import req from "../../axiosSetup"
 import Card from './card'
+import { useDispatch } from "react-redux/es/exports"
+import { mainLoadingSwitch } from "../../reduxSlices/mainstates/mainstates"
 
 const CardsLogic = (cardslocation) => {
   const [homeCards, setHomeCards] = useState([])
   const [askCards, setAskCards] = useState('init')
   const memory = useContext(Context)
+  const dispatch = useDispatch()
 
   // just to avoid babel warning:
-  const sethomeloading = memory.setHomeLoading;
+  // const sethomeloading = memory.setHomeLoading;
   const postSecretStatus = memory.postSecretStatus.current;
 
   useEffect(() => {
@@ -21,9 +24,10 @@ const CardsLogic = (cardslocation) => {
     }
     if(askCards === 'next' ||
     askCards === 'init' ||
-      postSecretStatus === 'secret posted') {
+    postSecretStatus === 'secret posted') {
       const runthis = async () => {
-        sethomeloading(true)
+        // sethomeloading(true)
+        dispatch(mainLoadingSwitch())
         const result = await req('getsecrets', 'GET', undefined, query)
         if(result.result) {
           console.log('secrets retreived');
@@ -41,11 +45,12 @@ const CardsLogic = (cardslocation) => {
         } else {
           alert('failed in retreiving secrets')
         }
-        sethomeloading(false)
+        // sethomeloading(false)
+        dispatch(mainLoadingSwitch())
       }
       runthis()
     }
-  }, [askCards, setAskCards, homeCards, sethomeloading, postSecretStatus, memory.postSecretStatus])
+  }, [askCards, setAskCards, homeCards, postSecretStatus, memory.postSecretStatus, dispatch])
 
   const nextpage = () => {
     setAskCards('next')
@@ -54,10 +59,8 @@ const CardsLogic = (cardslocation) => {
   const c = () => {
     let arr = []
     if (homeCards.length === 0) {
-      console.log('state homeCards secrets length = 0');
       arr.push(<h1 key={0}>Loadinggg...</h1>)
     } else {
-      console.log('cards for homepage create cards');
       for (let i = 0; i < homeCards.length; i++) {
         const card = homeCards[i]
         arr.push(

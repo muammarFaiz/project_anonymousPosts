@@ -2,11 +2,14 @@ import { useRef } from "react";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../../App";
 import req from "../../axiosSetup";
+import { useDispatch } from "react-redux/es/hooks/useDispatch";
+import { mainLoadingSwitch } from "../../reduxSlices/mainstates/mainstates";
 
 export default function CardLogic(props) {
   const memory = useContext(Context)
   const [votes, setVotes] = useState('')
   const audioB64 = useRef(null)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (props.card.vote_count === undefined || props.card.vote_count === 'init') {
@@ -18,7 +21,8 @@ export default function CardLogic(props) {
   }, [props.card.vote_count, props.card.audio])
 
   const vote = async (action, id) => {
-    memory.setHomeLoading(true)
+    // memory.setHomeLoading(true)
+    dispatch(mainLoadingSwitch())
     const result = await req('vote', 'GET', undefined, { status: action, id: id })
     if (result !== 'ok') {
       alert('fail to vote')
@@ -33,7 +37,8 @@ export default function CardLogic(props) {
         return n
       })
     }
-    memory.setHomeLoading(false)
+    // memory.setHomeLoading(false)
+    dispatch(mainLoadingSwitch())
   }
 
   const deleteSecret = async (n) => {

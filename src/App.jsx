@@ -8,24 +8,26 @@ import Login from './pages/login/login';
 import Register from './pages/register/register';
 import Profile from './pages/profile/profile';
 import User from './pages/user/user';
+import { useSelector } from 'react-redux/es/exports';
 
 export const Context = createContext();
 
 function App() {
   const memory = AppLogic();
   console.log('**********************app element render');
+  const loginStatus = useSelector(state => state.memory.loginStatus)
   return (
     // <React.StrictMode>
     <BrowserRouter>
         {
-          memory.loginStatus === 'loading' ?
+          loginStatus === 'loading' ?
             <h1>Loading...</h1> :
             <Context.Provider value={memory}>
               <Routes>
                 <Route path="/" element={<Ground />}>
                   <Route index element={<Home />} />
                   {
-                    memory.loginStatus === 'ok' ?
+                    loginStatus === 'ok' ?
                     <>
                       <Route path='profile' element={<Profile />} />
                       <Route path='user' element={<User />} />

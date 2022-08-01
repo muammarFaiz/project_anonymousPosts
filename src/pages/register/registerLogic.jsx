@@ -2,6 +2,8 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../../App";
 import req from "../../axiosSetup";
+import { useDispatch } from "react-redux/es/hooks/useDispatch";
+import { mainLoadingSwitch } from "../../reduxSlices/mainstates/mainstates";
 
 export default function RegisterLogic() {
   const [username, setUsername] = useState('')
@@ -9,6 +11,7 @@ export default function RegisterLogic() {
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
   const memory = useContext(Context)
+  const dispatch = useDispatch()
 
   const usernameEdit = (val) => {
     setUsername(val.target.value)
@@ -22,7 +25,8 @@ export default function RegisterLogic() {
 
   const formOnsubmit = async (val) => {
     val.preventDefault();
-    memory.setHomeLoading(true)
+    // memory.setHomeLoading(true)
+    dispatch(mainLoadingSwitch())
     let result
     try {
       result = await req('register', 'POST', {
@@ -39,7 +43,8 @@ export default function RegisterLogic() {
           description: result.errors[0].msg
         })
       }
-      memory.setHomeLoading(false)
+      // memory.setHomeLoading(false)
+      dispatch(mainLoadingSwitch())
     } catch (error) {
       console.log(error);
       alert(error.message)

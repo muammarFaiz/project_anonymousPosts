@@ -10,6 +10,7 @@ export default function Top_navigation(props) {
   const logic = Topnavlogic();
   const navigate = useNavigate()
   const count = useSelector(state => state.counter.value)
+  const loginStatus = useSelector(state => state.memory.loginStatus)
 
   console.log('topnav render');
   // using what you learn from redux, try to move all the context into redux store
@@ -24,7 +25,7 @@ export default function Top_navigation(props) {
         </div>
         <div className="loginReg">
           {
-            memory.loginStatus === 'ok' ?
+            loginStatus === 'ok' ?
             <>
             <Link to="/profile" className='loginButton buttonAnchor'>Profile</Link>
             <Link to="/#" className='buttonAnchor' onClick={logic.logout}>Logout</Link>
@@ -32,7 +33,7 @@ export default function Top_navigation(props) {
               <img src={memory.userImgSrc} alt="" onClick={v => navigate('/user')} className='topnav-userimage' />
             </div>
             </> :
-              memory.loginStatus === 'loading' ?
+              loginStatus === 'loading' ?
               <Link to="/#" className='buttonAnchor'>Loading user info...</Link> :
               <>
                 <p>{count}</p>
@@ -43,7 +44,7 @@ export default function Top_navigation(props) {
         </div>
       </div>
       {
-        memory.homeLoading ?
+        logic.mainLoading ?
           <div className="homeLoading">
             <div className="homeLoadingMain">
               <p>Loading...</p>
