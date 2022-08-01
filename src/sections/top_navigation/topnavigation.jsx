@@ -3,12 +3,16 @@ import {Link, useNavigate} from 'react-router-dom';
 import { useContext } from 'react';
 import { Context } from '../../App';
 import Topnavlogic from './topnavlogic';
+import { useSelector } from 'react-redux';
 
 export default function Top_navigation(props) {
   const memory = useContext(Context)
   const logic = Topnavlogic();
   const navigate = useNavigate()
+  const count = useSelector(state => state.counter.value)
 
+  console.log('topnav render');
+  // using what you learn from redux, try to move all the context into redux store
   return (
     <>
     <div className="topnav-wrapper">
@@ -31,6 +35,7 @@ export default function Top_navigation(props) {
               memory.loginStatus === 'loading' ?
               <Link to="/#" className='buttonAnchor'>Loading user info...</Link> :
               <>
+                <p>{count}</p>
                 <Link to="/login" className='loginButton buttonAnchor'>Login</Link>
                 <Link to="/register" className='registerButton buttonAnchor'>Register</Link>
               </>
