@@ -11,9 +11,10 @@ import axios from 'axios';
  */
 async function req(route, method, data_obj, query, contentType) {
   let result
+  const domain = process.env.REACT_APP_DOMAIN
   try {
     result = await axios({
-      url: `${process.env.REACT_APP_DOMAIN}${route}`,
+      url: `${domain}${route}`,
       method: method,
       data: data_obj,
       headers: {
