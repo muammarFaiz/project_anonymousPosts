@@ -1,5 +1,7 @@
 import LoginLogic from "./loginLogic";
 import './logincss.css'
+import InputMod from "../../customComponents/input";
+import ButtonMod from "../../customComponents/button";
 
 export default function Login() {
   const logic = LoginLogic();
@@ -10,13 +12,13 @@ export default function Login() {
         <form onSubmit={logic.formOnsubmit}>
           <label htmlFor="email">
             <p>Email:</p>
-            <input type="text" name="email" id="login_email" value={logic.email} onChange={logic.setEmailInput} required />
+            <InputMod type="text" name="email" id="login_email" value={logic.email} onChange={logic.setEmailInput} required />
           </label>
           <label htmlFor="password">
             <p>Password:</p>
-            <input type="text" name="password" id="login_password" value={logic.password} onChange={logic.setPasswordInput} required />
+            <InputMod type="text" name="password" id="login_password" value={logic.password} onChange={logic.setPasswordInput} required />
           </label><br />
-          <button type="submit">Login</button>
+          <ButtonMod type="submit">Login</ButtonMod>
         </form>
       </div>
     </div>

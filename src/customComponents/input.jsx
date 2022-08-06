@@ -1,10 +1,26 @@
-import { useContext } from "react"
-import { Context } from "../App"
+// import { useContext } from "react"
+// import { Context } from "../App"
+import { useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
+import { setCapslock } from "../reduxSlices/mainstates/mainstates"
 
-export default function Input(props) {
-  const memory = useContext(Context)
-  const {disabled, ...filtered} = props
-  const disabledResult = props.specialInput ? disabled : memory.popupmessageStatus
+export default function InputMod(props) {
+  // const memory = useContext(Context)
+  const messageContent = useSelector(state => state.memory.messageContent)
+  const disableOrNot = messageContent ? true : false
+  const dispatch = useDispatch()
 
-  return <input {...filtered} disabled={disabledResult} />
+  const capsOnkeydown = v => {
+    const capsState = v.getModifierState('CapsLock')
+    if(capsState) {
+      dispatch(setCapslock(true))
+    } else {
+      dispatch(setCapslock(false))
+    }
+  }
+
+  const {disabled, specialInput, ...filtered} = props
+  const disabledResult = specialInput ? disabled : disableOrNot
+
+  return <input {...filtered} disabled={disabledResult} onKeyDown={capsOnkeydown} />
 }

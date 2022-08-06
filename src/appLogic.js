@@ -1,32 +1,27 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import req from "./axiosSetup";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoginStatus } from "./reduxSlices/mainstates/mainstates";
+import { setCapslock, setLoginStatus, setUserImgSrc, setUserinfo } from "./reduxSlices/mainstates/mainstates";
 
 export default function AppLogic() {
   // const [loginStatus, setLoginStatus] = useState('loading')
-  const [popupmessageStatus, setPopupmessageStatus] = useState(false)
-  const [messageContent, setMessageContent] = useState('')
+  // const [popupmessageStatus, setPopupmessageStatus] = useState(false)
+  // const [messageContent, setMessageContent] = useState('')
   // const [homeLoading, setHomeLoading] = useState('')
-  const [deleteSecretN, setDeleteSecretN] = useState('')
-  const [poststatus, setpoststatus] = useState('')
-  const postSecretStatus = useRef(null)
-  const [capslock, setCapslock] = useState('')
-  const [userImgSrc, setUserImgSrc] = useState('')
-  const [userinfo, setUserinfo] = useState('')
-  const [showChangeImg, setShowChangeImg] = useState('')
-  const [showEditProfile, setShowEditProfile] = useState('')
+  // const [deleteSecretN, setDeleteSecretN] = useState('')
+  // const [poststatus, setpoststatus] = useState('')
+  // const postSecretStatus = useRef(null)
+  // const [capslock, setCapslock] = useState('')
+  // const [userImgSrc, setUserImgSrc] = useState('')
+  // const [userinfo, setUserinfo] = useState('')
+  // const [showChangeImg, setShowChangeImg] = useState('')
+  // const [showEditProfile, setShowEditProfile] = useState('')
 
-  // state migration to redux done: homeLoading, loginStatus
+  // state removed: popupmessageStatus
 
   const dispatch = useDispatch()
   const loginStatus = useSelector(state => state.memory.loginStatus)
 
-  const getImgFromServer = async () => {
-    const result = await req('userimage', 'GET')
-    console.log('img received');
-    setUserImgSrc('data:' + result.mimetype + ';base64,' + result.base64)
-  }
   useEffect( () => {
     const token = localStorage.getItem('token')
     if(token) {
@@ -34,12 +29,13 @@ export default function AppLogic() {
       async function fetchdata() {
         result = await req('verifytoken', 'GET', null)
         if(result.status === 'ok') {
-          console.log('token accepted');
+          console.log('req verifytoken: token accepted');
           // setLoginStatus('ok')
           dispatch(setLoginStatus('ok'))
-          setUserinfo(result.userinfo)
+          // setUserinfo(result.userinfo)
+          dispatch(setUserinfo(result.userinfo))
         } else {
-          console.log('token rejected');
+          console.log('req verifytoken: token rejected');
           // setLoginStatus('rejected')
           dispatch(setLoginStatus('rejected'))
         }
@@ -53,43 +49,55 @@ export default function AppLogic() {
   }, [dispatch])
 
   useEffect(() => {
-    if(loginStatus === 'ok') getImgFromServer()
-  }, [loginStatus])
-
-  useEffect(() => {
-    if(messageContent !== '') {
-      console.log('message useeffect run');
-      setPopupmessageStatus(true)
+    if(loginStatus === 'ok') {
+      const getImgFromServer = async () => {
+        const result = await req('userimage', 'GET')
+        console.log('req userimage: img received');
+        // setUserImgSrc('data:' + result.mimetype + ';base64,' + result.base64)
+        dispatch(setUserImgSrc('data:' + result.mimetype + ';base64,' + result.base64))
+      }
+      getImgFromServer()
     }
-  }, [messageContent])
+  }, [loginStatus, dispatch])
+
+  // useEffect(() => {
+  //   if(messageContent !== '') {
+  //     console.log('message useeffect run');
+  //     // setPopupmessageStatus(true)
+  //     dispatch(popupmessageStatusSwitch())
+  //   }
+  // }, [messageContent, dispatch])
   
   const capsPressed = (v) => {
+    console.log('capsPressed func running');
     const capsStatus = v.getModifierState('CapsLock')
     if(capsStatus) {
-      if(!capslock) {
-        setCapslock(true)
-      }
+      // if(!capslock) {
+      //   setCapslock(true)
+      // }
+      dispatch(setCapslock(true))
     } else {
-      if(capslock) {
-        setCapslock(false)
-      }
+      // if(capslock) {
+      //   setCapslock(false)
+      // }
+      dispatch(setCapslock(false))
     }
   }
 
   return {
     // loginStatus, setLoginStatus,
-    popupmessageStatus, setPopupmessageStatus,
-    messageContent, setMessageContent,
+    // popupmessageStatus, setPopupmessageStatus,
+    // messageContent, setMessageContent,
     // homeLoading, setHomeLoading,
-    deleteSecretN, setDeleteSecretN,
+    // deleteSecretN, setDeleteSecretN,
     // homepagePostSecret, setHomepagePostSecret,
-    postSecretStatus,
-    capslock,
+    // postSecretStatus,
+    // capslock,
     capsPressed,
-    userImgSrc, setUserImgSrc,
-    userinfo, setUserinfo,
-    showChangeImg, setShowChangeImg,
-    poststatus, setpoststatus,
-    showEditProfile, setShowEditProfile
+    // userImgSrc, setUserImgSrc,
+    // userinfo, setUserinfo,
+    // showChangeImg, setShowChangeImg,
+    // poststatus, setpoststatus,
+    // showEditProfile, setShowEditProfile
   }
 }

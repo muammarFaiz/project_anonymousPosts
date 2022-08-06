@@ -1,21 +1,24 @@
 import './popupmessagecss.css'
-import { useContext } from 'react'
-import { Context } from '../../App'
+// import { useContext } from 'react'
+// import { Context } from '../../App'
 import popupmessagelogic from './popupmessagelogic'
+import { useSelector } from 'react-redux'
 
 export default function Popupmessage({title, description}) {
   const logic = popupmessagelogic()
-  const memory = useContext(Context)
+  // const memory = useContext(Context)
+  // const popupmessageStatus = useSelector(state => state.memory.popupmessageStatus)
+  const messageContent = useSelector(state => state.memory.messageContent)
 
-  if(memory.popupmessageStatus) {
+  if(messageContent) {
     return (
       <div className="popupmessage_blockingbackground">
         <div className="popupmessage">
           <div className="popupmessage_title">
-            <h2>{memory.messageContent.title}</h2>
+            <h2>{messageContent.title}</h2>
           </div>
           <div className="popupmessage_description">
-            <p>{memory.messageContent.description}</p>
+            <p>{messageContent.description}</p>
           </div>
           <button onClick={logic.done} autoFocus>Ok</button>
         </div>

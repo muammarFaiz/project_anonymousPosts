@@ -1,39 +1,43 @@
-import { useContext, useEffect, useState } from "react"
-import { Context } from "../../App"
+import { useEffect, useState } from "react"
+// import { Context } from "../../App"
 import req from "../../axiosSetup"
 import Card from './card'
-import { useDispatch } from "react-redux/es/exports"
-import { mainLoadingSwitch } from "../../reduxSlices/mainstates/mainstates"
+import { useDispatch, useSelector } from "react-redux/es/exports"
+import { mainLoadingSwitch, setPoststatus } from "../../reduxSlices/mainstates/mainstates"
 
 const CardsLogic = (cardslocation) => {
   const [homeCards, setHomeCards] = useState([])
   const [askCards, setAskCards] = useState('init')
-  const memory = useContext(Context)
+  // const memory = useContext(Context)
   const dispatch = useDispatch()
 
   // just to avoid babel warning:
   // const sethomeloading = memory.setHomeLoading;
-  const postSecretStatus = memory.postSecretStatus.current;
+  const poststatus = useSelector(state => state.memory.poststatus)
 
   useEffect(() => {
     let query
     if(askCards === 'next') {
-      query = {idIndex: homeCards[homeCards.length - 1]._id}
-    } else if (askCards === 'init' || postSecretStatus === 'secret posted') {
+      const idref = homeCards[homeCards.length - 1]._id
+      query = {idIndex: idref}
+    } else if (askCards === 'init' || poststatus === 'secret posted') {
       query = undefined
     }
     if(askCards === 'next' ||
     askCards === 'init' ||
-    postSecretStatus === 'secret posted') {
+    poststatus === 'secret posted') {
+      console.log(`askcards: ${askCards}, homecards: ${homeCards}, poststatus: ${poststatus}`);
       const runthis = async () => {
+        // if(askCards === 'next') setHomeCards([])
         // sethomeloading(true)
         dispatch(mainLoadingSwitch())
         const result = await req('getsecrets', 'GET', undefined, query)
         if(result.result) {
-          console.log('secrets retreived');
-          if (postSecretStatus === 'secret posted') {
+          console.log('req getsecrets: secrets retreived');
+          if (poststatus === 'secret posted') {
             setHomeCards(result.result)
-            memory.postSecretStatus.current = 'done'
+            // memory.postSecretStatus.current = 'done'
+            dispatch(setPoststatus('done'))
           } else {
             setHomeCards(prev => {
               const a = [...prev]
@@ -50,7 +54,7 @@ const CardsLogic = (cardslocation) => {
       }
       runthis()
     }
-  }, [askCards, setAskCards, homeCards, postSecretStatus, memory.postSecretStatus, dispatch])
+  }, [askCards, homeCards, poststatus, dispatch])
 
   const nextpage = () => {
     setAskCards('next')
@@ -58,7 +62,7 @@ const CardsLogic = (cardslocation) => {
 
   const c = () => {
     let arr = []
-    if (homeCards.length === 0) {
+    if (homeCards.length === 0 || askCards === 'next') {
       arr.push(<h1 key={0}>Loadinggg...</h1>)
     } else {
       for (let i = 0; i < homeCards.length; i++) {

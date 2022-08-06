@@ -1,5 +1,7 @@
-import { useContext } from 'react'
-import { Context } from '../../App'
+// import { useContext } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+// import { Context } from '../../App'
+import { setShowChangeImg, setShowEditProfile } from '../../reduxSlices/mainstates/mainstates'
 import EditProfile from './editProfile/editProfile'
 import Uploadimg from './uploadImg/uploadimg'
 import './usercss.css'
@@ -7,22 +9,27 @@ import UserLogic from "./userlogic"
 
 export default function User() {
   const logic = UserLogic()
-  const memory = useContext(Context)
+  // const memory = useContext(Context)
+  const userImgSrc = useSelector(state => state.memory.userImgSrc)
+  const userinfo = useSelector(state => state.memory.userinfo)
+  const showChangeImg = useSelector(state => state.memory.showChangeImg)
+  const showEditProfile = useSelector(state => state.memory.showEditProfile)
+  const dispatch = useDispatch()
 
   return (
     <div className="userProfile-wrapper">
       <div className="fromServer">
-        <img src={memory.userImgSrc} alt="from server..." />
-        <h2 className='userpage-username'>{memory.userinfo.username}</h2>
-        <p className="userpage-useremail">{memory.userinfo.email}</p>
-        <button className="userpage-changeusername" onClick={() => memory.setShowEditProfile(true)}>Change Username</button>
-        <button className="userpage-changephoto" onClick={() => memory.setShowChangeImg(true)}>Change Photo</button>
+        <img src={userImgSrc} alt="from server..." />
+        <h2 className='userpage-username'>{userinfo.username}</h2>
+        <p className="userpage-useremail">{userinfo.email}</p>
+        <button className="userpage-changeusername" onClick={() => dispatch(setShowEditProfile(true))}>Change Username</button>
+        <button className="userpage-changephoto" onClick={() => dispatch(setShowChangeImg(true))}>Change Photo</button>
         {
-          memory.showChangeImg || memory.showEditProfile ?
+          showChangeImg || showEditProfile ?
             <div className="userpage-imageinputwrapper" onClick={logic.hideImgInput}>
               <div className="userpage-imageinput" onClick={logic.removeBubling}>
                 {
-                  memory.showChangeImg ? <Uploadimg /> : <EditProfile />
+                  showChangeImg ? <Uploadimg /> : <EditProfile />
                   // if user click change image show this, if user click change username show this...
                   // basically use if else for uploadimg and editprofile
                 }

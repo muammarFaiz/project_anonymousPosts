@@ -1,12 +1,12 @@
 import { useRef } from "react";
-import { useContext, useEffect, useState } from "react";
-import { Context } from "../../App";
+import { useEffect, useState } from "react";
+// import { Context } from "../../App";
 import req from "../../axiosSetup";
 import { useDispatch } from "react-redux/es/hooks/useDispatch";
-import { mainLoadingSwitch } from "../../reduxSlices/mainstates/mainstates";
+import { mainLoadingSwitch, setDeleteSecretN } from "../../reduxSlices/mainstates/mainstates";
 
 export default function CardLogic(props) {
-  const memory = useContext(Context)
+  // const memory = useContext(Context)
   const [votes, setVotes] = useState('')
   const audioB64 = useRef(null)
   const dispatch = useDispatch()
@@ -27,6 +27,7 @@ export default function CardLogic(props) {
     if (result !== 'ok') {
       alert('fail to vote')
     } else {
+      console.log('req vote: success')
       setVotes(prev => {
         let n = prev + 0
         if(action === 'up') {
@@ -42,7 +43,8 @@ export default function CardLogic(props) {
   }
 
   const deleteSecret = async (n) => {
-    memory.setDeleteSecretN(n)
+    // memory.setDeleteSecretN(n)
+    dispatch(setDeleteSecretN(n))
   }
 
   const arrBuffToUrlObj = (ab, mime) => {

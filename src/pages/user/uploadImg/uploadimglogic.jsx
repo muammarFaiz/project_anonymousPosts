@@ -1,6 +1,8 @@
-import { useContext, useRef, useState } from "react"
+import { useRef, useState } from "react"
 import req from '../../../axiosSetup'
-import { Context } from "../../../App"
+// import { Context } from "../../../App"
+import { useDispatch } from "react-redux"
+import { setShowChangeImg, setUserImgSrc } from "../../../reduxSlices/mainstates/mainstates"
 
 const WIDTH = 300
 const HEIGHT = 300
@@ -9,8 +11,9 @@ export default function UploadImgLogic() {
   const imgPreview = useRef(null)
   const [modifiedImg, setModifiedImg] = useState('')
   const [specialLoading, setSpecialLoading] = useState('')
+  const dispatch = useDispatch()
   
-  const memory = useContext(Context)
+  // const memory = useContext(Context)
 
   const imgOnchange = v => {
     const imgToEdit = v.target.files[0]
@@ -49,12 +52,13 @@ export default function UploadImgLogic() {
     if (modifiedImg !== '') {
       setSpecialLoading(true)
       const result = await req('profileImg', 'POST', { img: modifiedImg })
-      console.log(result);
-      // if result === ok then notif user upload succeed, and update the user image
-      // also the preview image and user image maybe need to be a circle
+      if(result === 'ok') {
+        console.log('req profileimg: result ok')
+      }
       await getFromServer()
       setSpecialLoading(false)
-      memory.setShowChangeImg(false)
+      // memory.setShowChangeImg(false)
+      dispatch(setShowChangeImg(false))
     } else {
       alert('there is no image to upload')
     }
@@ -62,7 +66,14 @@ export default function UploadImgLogic() {
 
   const getFromServer = async () => {
     const result = await req('userimage', 'GET')
-    memory.setUserImgSrc('data:' + result.mimetype + ';base64,' + result.base64)
+    if(result.mimetype) {
+      console.log('req userimage: success')
+      // memory.setUserImgSrc('data:' + result.mimetype + ';base64,' + result.base64)
+      dispatch(setUserImgSrc('data:' + result.mimetype + ';base64,' + result.base64))
+    } else {
+      alert('failed to get the user image')
+    }
+
   }
 
   return {

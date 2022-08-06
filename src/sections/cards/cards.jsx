@@ -5,7 +5,7 @@ import { AiOutlineArrowRight } from 'react-icons/ai'
 
 export default function Cards({cardslocation}) {
   const logic = cardsLogic(cardslocation)
-
+  console.log('cards render');
   return (
     <>
       <div className="cardwrap">

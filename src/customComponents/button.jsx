@@ -1,9 +1,13 @@
-import { useContext } from "react"
-import { Context } from "../App"
+// import { useContext } from "react"
+// import { Context } from "../App"
+import { useSelector } from "react-redux"
 
-export default function Button(props) {
-  const memory = useContext(Context)
-  const {disabled, ...filtered} = props
-  const disabledResult = props.specialButton ? disabled : memory.popupmessageStatus
+export default function ButtonMod(props) {
+  // const memory = useContext(Context)
+  const messageContent = useSelector(state => state.memory.messageContent)
+  const disableOrNot = messageContent ? true : false
+
+  const {disabled, specialButton, ...filtered} = props
+  const disabledResult = specialButton ? disabled : disableOrNot
   return <button {...filtered} disabled={disabledResult}>{props.children}</button>
 }
