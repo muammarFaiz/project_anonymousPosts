@@ -13,7 +13,7 @@ async function req(route, method, data_obj, query, contentType) {
   let result
   try {
     result = await axios({
-      url: `http://localhost:3001/${route}`,
+      url: `${process.env.REACT_APP_DOMAIN}${route}`,
       method: method,
       data: data_obj,
       headers: {

@@ -43,7 +43,7 @@ export default function LoginLogic() {
   const setPasswordInput = (val) => {
     setPassword(val.target.value)
   }
-  
+
   return {
     formOnsubmit,
     email, setEmailInput,
