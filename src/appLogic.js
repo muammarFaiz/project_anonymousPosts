@@ -20,6 +20,7 @@ export default function AppLogic() {
   // state removed: popupmessageStatus
 
   const dispatch = useDispatch()
+  // a simple change
   const loginStatus = useSelector(state => state.memory.loginStatus)
 
   useEffect( () => {
