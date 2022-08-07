@@ -11,7 +11,7 @@ export default function InputSecret() {
       <div className="postsomething-inputwrapper">
         <div className="editor-wrapper">
           <Editor
-            apiKey="4mvv8o657gw9mtsftkdpcf8yxxev2hhxi5xref9juznrtv8g"
+            apiKey={process.env.REACT_APP_TINYMCE_APIKEY}
             onInit={logic.editorOnInit}
             onDirty={() => logic.setDirty(true)}
             init={{
