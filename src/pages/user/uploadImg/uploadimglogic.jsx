@@ -47,7 +47,7 @@ export default function UploadImgLogic() {
   const sendImage = async () => {
     if (modifiedImg !== '') {
       setSpecialLoading(true)
-      const result = await req('profileImg', 'POST', { img: modifiedImg })
+      await req('profileImg', 'POST', { img: modifiedImg })
       await getFromServer()
       setSpecialLoading(false)
       dispatch(setShowChangeImg(false))
