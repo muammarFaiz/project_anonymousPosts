@@ -30,8 +30,12 @@ export default function InputSecret() {
         {
           logic.recordButton ?
             <button onClick={logic.startRecording}>Record audio</button> :
-            <button onClick={logic.stopRecording}>Stop recording</button>
-        }<br />
+            <>
+              <button onClick={logic.stopRecording}>Stop recording</button>
+              <p>{logic.secs}</p>
+            </>
+        }
+        <br />
         {logic.audioElem}<br />
         <button className="inputsecret-postbutton" onClick={logic.postSecret} disabled={!logic.dirty}>Post</button>
         {/* reset the text editor if the user successfully post a secret/audio,

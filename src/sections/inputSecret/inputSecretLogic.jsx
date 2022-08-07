@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import { useState } from "react"
 import req from "../../axiosSetup";
 import { useDispatch } from "react-redux/es/hooks/useDispatch";
@@ -12,6 +12,9 @@ export default function InputSecretLogic() {
   const audioChunks = useRef([])
   const [audioElem, setAudioElem] = useState('')
   const [recordButton, setRecordButton] = useState(true)
+  const [secs, setSecs] = useState(5)
+  const intervalId = useRef(null)
+
   const dispatch = useDispatch()
   
   const postSecret = async () => {
@@ -68,6 +71,7 @@ export default function InputSecretLogic() {
           </>
         )
         setDirty(true)
+        setSecs(5)
         dispatch(mainLoadingSwitch())
         setRecordButton(true)
       }
@@ -77,13 +81,27 @@ export default function InputSecretLogic() {
     })
   }
   const stopRecording = () => {
-    audioRecorder.current.stop()
+    if(audioRecorder.current.state !== 'inactive') audioRecorder.current.stop()
   }
 
   const removeCurrentAudio = () => {
     setAudioElem('')
     audioChunks.current = []
   }
+
+  useEffect(() => {
+    if(!recordButton && !intervalId.current) {
+      intervalId.current = setInterval(() => {
+        setSecs(prev => prev - 1)
+      }, 1000);
+    }
+    if((recordButton || secs === 0) && intervalId.current) {
+      console.log('clearinterval running...')
+      clearInterval(intervalId.current)
+      stopRecording()
+      intervalId.current = null
+    }
+  }, [recordButton, secs])
 
   return {
     postSecret,
@@ -92,6 +110,7 @@ export default function InputSecretLogic() {
     startRecording,
     stopRecording,
     audioElem,
-    recordButton
+    recordButton,
+    secs
   }
 }
