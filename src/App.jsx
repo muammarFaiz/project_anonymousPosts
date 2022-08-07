@@ -14,7 +14,6 @@ export const Context = createContext();
 
 function App() {
   const memory = AppLogic();
-  console.log('**********************app element render');
   const loginStatus = useSelector(state => state.memory.loginStatus)
   return (
     // <React.StrictMode>
