@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-// import { Context } from "../../App"
 import req from "../../axiosSetup"
 import Card from './card'
 import { useDispatch, useSelector } from "react-redux/es/exports"
@@ -8,11 +7,8 @@ import { mainLoadingSwitch, setPoststatus } from "../../reduxSlices/mainstates/m
 const CardsLogic = (cardslocation) => {
   const [homeCards, setHomeCards] = useState([])
   const [askCards, setAskCards] = useState('init')
-  // const memory = useContext(Context)
   const dispatch = useDispatch()
 
-  // just to avoid babel warning:
-  // const sethomeloading = memory.setHomeLoading;
   const poststatus = useSelector(state => state.memory.poststatus)
 
   useEffect(() => {
@@ -26,17 +22,12 @@ const CardsLogic = (cardslocation) => {
     if(askCards === 'next' ||
     askCards === 'init' ||
     poststatus === 'secret posted') {
-      console.log(`askcards: ${askCards}, homecards: ${homeCards}, poststatus: ${poststatus}`);
       const runthis = async () => {
-        // if(askCards === 'next') setHomeCards([])
-        // sethomeloading(true)
         dispatch(mainLoadingSwitch())
         const result = await req('getsecrets', 'GET', undefined, query)
         if(result.result) {
-          console.log('req getsecrets: secrets retreived');
           if (poststatus === 'secret posted') {
             setHomeCards(result.result)
-            // memory.postSecretStatus.current = 'done'
             dispatch(setPoststatus('done'))
           } else {
             setHomeCards(prev => {
@@ -49,7 +40,6 @@ const CardsLogic = (cardslocation) => {
         } else {
           alert('failed in retreiving secrets')
         }
-        // sethomeloading(false)
         dispatch(mainLoadingSwitch())
       }
       runthis()

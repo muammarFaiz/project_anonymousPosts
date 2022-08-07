@@ -1,13 +1,11 @@
 import { useRef } from "react"
 import { useState } from "react"
-// import { Context } from "../../App";
 import req from "../../axiosSetup";
 import { useDispatch } from "react-redux/es/hooks/useDispatch";
 import { mainLoadingSwitch, setMessageContent, setPoststatus } from "../../reduxSlices/mainstates/mainstates";
 
 
 export default function InputSecretLogic() {
-  // const memory = useContext(Context)
   const editorRef = useRef(null);
   const [dirty, setDirty] = useState(false)
   const audioRecorder = useRef(null)
@@ -17,21 +15,14 @@ export default function InputSecretLogic() {
   const dispatch = useDispatch()
   
   const postSecret = async () => {
-    console.log('post secret running');
-    // memory.setHomeLoading(true)
     dispatch(mainLoadingSwitch())
     if (editorRef.current) {
       const content = editorRef.current.getContent()
-      console.log(content);
       let audioBlob
       if(audioChunks.current.length) audioBlob = new Blob(audioChunks.current, { type: audioChunks.current[0].type })
-      console.log(audioBlob);
 
       if(!content && !audioBlob) {
-        console.log('should show popup');
-        // memory.setHomeLoading(false)
         dispatch(mainLoadingSwitch())
-        // memory.setMessageContent({title: 'denied', description: 'there is nothing to send'})
         dispatch(setMessageContent({title: 'denied', description: 'there is nothing to send'}))
         return
       }
@@ -39,9 +30,6 @@ export default function InputSecretLogic() {
         content: content, audiobuffer: audioBlob
       }, undefined, 'multipart/form-data')
       if (result === 'ok') {
-        console.log('req postsecret: secret uploaded');
-        // memory.postSecretStatus.current = 'secret posted'
-        // memory.setpoststatus('secret posted')
         dispatch(setPoststatus('secret posted'))
         setDirty(false)
         editorRef.current.setDirty(false)
@@ -56,7 +44,6 @@ export default function InputSecretLogic() {
     } else {
       alert('editor is not loaded')
     }
-    // memory.setHomeLoading(false)
     dispatch(mainLoadingSwitch())
   }
 
@@ -72,10 +59,8 @@ export default function InputSecretLogic() {
       }
       audioMediaRecorder.onstop = event => {
         stream.getTracks().forEach(track => track.stop())
-        // memory.setHomeLoading(true)
         dispatch(mainLoadingSwitch())
         const audioBlob = new Blob(audioChunks.current, {type: audioChunks.current[0].type})
-        console.log(audioBlob);
         setAudioElem(
           <>
             <audio src={URL.createObjectURL(audioBlob)} controls></audio>
@@ -83,7 +68,6 @@ export default function InputSecretLogic() {
           </>
         )
         setDirty(true)
-        // memory.setHomeLoading(false)
         dispatch(mainLoadingSwitch())
         setRecordButton(true)
       }

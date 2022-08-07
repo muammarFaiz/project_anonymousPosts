@@ -1,13 +1,9 @@
 import './popupmessagecss.css'
-// import { useContext } from 'react'
-// import { Context } from '../../App'
 import popupmessagelogic from './popupmessagelogic'
 import { useSelector } from 'react-redux'
 
 export default function Popupmessage({title, description}) {
   const logic = popupmessagelogic()
-  // const memory = useContext(Context)
-  // const popupmessageStatus = useSelector(state => state.memory.popupmessageStatus)
   const messageContent = useSelector(state => state.memory.messageContent)
 
   if(messageContent) {

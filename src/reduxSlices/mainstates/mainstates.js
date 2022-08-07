@@ -48,8 +48,6 @@ export const memorySlice = createSlice({
   }
 })
 
-// the popup message position does not fixed, unlike the change image or username, learn from those two
-
 export const {
   mainLoadingSwitch, setLoginStatus, setMessageContent, setDeleteSecretN, setPoststatus, setCapslock,
   setUserImgSrc, setUserinfo, setShowChangeImg, setShowEditProfile

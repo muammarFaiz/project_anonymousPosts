@@ -1,12 +1,9 @@
-// import { useContext } from 'react'
 import { useSelector } from 'react-redux'
-// import { Context } from '../../../App'
 import './editProfileCss.css'
 import EditProfileLogic from './editProfileLogic'
 
 export default function EditProfile() {
   const logic = EditProfileLogic()
-  // const memory = useContext(Context)
   const userinfo = useSelector(state => state.memory.userinfo)
 
   return (

@@ -1,11 +1,8 @@
-// import { useContext } from "react"
-// import { Context } from "../App"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 import { setCapslock } from "../reduxSlices/mainstates/mainstates"
 
 export default function InputMod(props) {
-  // const memory = useContext(Context)
   const messageContent = useSelector(state => state.memory.messageContent)
   const disableOrNot = messageContent ? true : false
   const dispatch = useDispatch()

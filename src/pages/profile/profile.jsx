@@ -5,7 +5,6 @@ import InputSecret from '../../sections/inputSecret/inputSecret'
 
 export default function Profile() {
   const logic = ProfileLogic()
-  console.log('profile element render');
   return (
     <div className="profile">
       <InputSecret />

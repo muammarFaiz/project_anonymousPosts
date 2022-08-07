@@ -5,7 +5,6 @@ import { setCapslock, setLoginStatus, setUserImgSrc, setUserinfo } from "./redux
 
 export default function AppLogic() {
   const dispatch = useDispatch()
-  // a simple change
   const loginStatus = useSelector(state => state.memory.loginStatus)
 
   useEffect( () => {

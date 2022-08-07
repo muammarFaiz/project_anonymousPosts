@@ -1,12 +1,9 @@
 import './topnavcss.css'
 import {Link, useNavigate} from 'react-router-dom';
-// import { useContext } from 'react';
-// import { Context } from '../../App';
 import Topnavlogic from './topnavlogic';
 import { useSelector } from 'react-redux';
 
 export default function Top_navigation(props) {
-  // const memory = useContext(Context)
   const logic = Topnavlogic();
   const navigate = useNavigate()
   const count = useSelector(state => state.counter.value)
@@ -14,8 +11,6 @@ export default function Top_navigation(props) {
   const capslock = useSelector(state => state.memory.capslock)
   const userImgSrc = useSelector(state => state.memory.userImgSrc)
 
-  console.log('topnav render');
-  // using what you learn from redux, try to move all the context into redux store
   return (
     <>
     <div className="topnav-wrapper">

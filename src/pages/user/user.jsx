@@ -1,6 +1,5 @@
-// import { useContext } from 'react'
+
 import { useSelector, useDispatch } from 'react-redux'
-// import { Context } from '../../App'
 import { setShowChangeImg, setShowEditProfile } from '../../reduxSlices/mainstates/mainstates'
 import EditProfile from './editProfile/editProfile'
 import Uploadimg from './uploadImg/uploadimg'
@@ -9,7 +8,6 @@ import UserLogic from "./userlogic"
 
 export default function User() {
   const logic = UserLogic()
-  // const memory = useContext(Context)
   const userImgSrc = useSelector(state => state.memory.userImgSrc)
   const userinfo = useSelector(state => state.memory.userinfo)
   const showChangeImg = useSelector(state => state.memory.showChangeImg)
@@ -30,8 +28,6 @@ export default function User() {
               <div className="userpage-imageinput" onClick={logic.removeBubling}>
                 {
                   showChangeImg ? <Uploadimg /> : <EditProfile />
-                  // if user click change image show this, if user click change username show this...
-                  // basically use if else for uploadimg and editprofile
                 }
                 
               </div>

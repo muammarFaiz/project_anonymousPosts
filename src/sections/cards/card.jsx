@@ -4,8 +4,6 @@ import CardLogic from "./cardLogic"
 
 import './cardcss.css'
 
-// create the delete functionality for profile page
-
 export default function Card(props) {
   const logic = CardLogic(props)
   

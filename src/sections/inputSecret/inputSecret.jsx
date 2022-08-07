@@ -9,7 +9,6 @@ export default function InputSecret() {
   const logic = InputSecretLogic()
   const dispatch = useDispatch()
 
-  console.log('inputsecret render');
   return (
     <div className="home-postsomething">
       <div className="postsomething-inputwrapper">

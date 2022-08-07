@@ -19,4 +19,3 @@ function Ground() {
 }
 
 export default Ground;
-// to App.jsx
