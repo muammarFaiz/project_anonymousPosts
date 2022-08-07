@@ -1,13 +1,10 @@
 import InputSecretLogic from "./inputSecretLogic"
 import { Editor } from "@tinymce/tinymce-react"
-import { useDispatch } from "react-redux/es/exports"
-import { decrement, increment, incByAmount } from "../../reduxSlices/counter/counterSlice"
 
 import './inputSecretcss.css'
 
 export default function InputSecret() {
   const logic = InputSecretLogic()
-  const dispatch = useDispatch()
 
   return (
     <div className="home-postsomething">
@@ -36,9 +33,6 @@ export default function InputSecret() {
             <button onClick={logic.stopRecording}>Stop recording</button>
         }<br />
         {logic.audioElem}<br />
-        <button onClick={() => dispatch(increment())}>increment</button>
-        <button onClick={() => dispatch(decrement())}>decrement</button>
-        <button onClick={() => dispatch(incByAmount(5))}>incBy5</button>
         <button className="inputsecret-postbutton" onClick={logic.postSecret} disabled={!logic.dirty}>Post</button>
         {/* reset the text editor if the user successfully post a secret/audio,
         also disable the post button because the texteditor and sound are empty,

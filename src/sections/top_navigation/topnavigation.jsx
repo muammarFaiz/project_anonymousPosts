@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 export default function Top_navigation(props) {
   const logic = Topnavlogic();
   const navigate = useNavigate()
-  const count = useSelector(state => state.counter.value)
   const loginStatus = useSelector(state => state.memory.loginStatus)
   const capslock = useSelector(state => state.memory.capslock)
   const userImgSrc = useSelector(state => state.memory.userImgSrc)
@@ -33,7 +32,6 @@ export default function Top_navigation(props) {
               loginStatus === 'loading' ?
               <Link to="/#" className='buttonAnchor'>Loading user info...</Link> :
               <>
-                <p>{count}</p>
                 <Link to="/login" className='loginButton buttonAnchor'>Login</Link>
                 <Link to="/register" className='registerButton buttonAnchor'>Register</Link>
               </>
