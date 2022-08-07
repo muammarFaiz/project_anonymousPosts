@@ -88,7 +88,7 @@ export default function InputSecretLogic() {
     setAudioElem('')
     audioChunks.current = []
   }
-
+  
   useEffect(() => {
     if(!recordButton && !intervalId.current) {
       intervalId.current = setInterval(() => {
@@ -102,7 +102,21 @@ export default function InputSecretLogic() {
       intervalId.current = null
     }
   }, [recordButton, secs])
-
+  
+  // upgrade css for mobile, visit heroku in smartphone for the ultimate test
+  const initTiny = () => {
+    return {
+      height: 250,
+      width: 600,
+    menu: {
+        format: { title: 'Format', items: 'codeformat removeformat' }
+      },
+      menubar: 'view insert format',
+      toolbar: 'undo redo | bold italic underline strikethrough subscript superscript codeformat blockquote | ' +
+        'alignleft aligncenter alignjustify alignright alignnone'
+    }
+  }
+  
   return {
     postSecret,
     dirty, setDirty,
@@ -111,6 +125,7 @@ export default function InputSecretLogic() {
     stopRecording,
     audioElem,
     recordButton,
-    secs
+    secs,
+    initTiny
   }
 }

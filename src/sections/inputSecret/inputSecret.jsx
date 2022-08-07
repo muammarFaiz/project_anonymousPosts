@@ -14,16 +14,7 @@ export default function InputSecret() {
             apiKey={process.env.REACT_APP_TINYMCE_APIKEY}
             onInit={logic.editorOnInit}
             onDirty={() => logic.setDirty(true)}
-            init={{
-              height: 250,
-              width: 600,
-              menu: {
-                format: { title: 'Format', items: 'codeformat removeformat'}
-              },
-              menubar: 'view insert format',
-              toolbar: 'undo redo | bold italic underline strikethrough subscript superscript codeformat blockquote | ' +
-                'alignleft aligncenter alignjustify alignright alignnone'
-            }}
+            init={logic.initTiny()}
           />
         </div>
         <div className="inputsecret-buttonswrapper">
