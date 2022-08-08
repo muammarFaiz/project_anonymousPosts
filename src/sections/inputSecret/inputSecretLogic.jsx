@@ -29,6 +29,12 @@ export default function InputSecretLogic() {
         dispatch(setMessageContent({title: 'denied', description: 'there is nothing to send'}))
         return
       }
+      console.log(content.length)
+      if(content.length > 500) {
+        dispatch(mainLoadingSwitch())
+        dispatch(setMessageContent({title: 'denied', description: 'content too long, reduce the content or its styling'}))
+        return
+      }
       const result = await req('postsecret', 'POST', {
         content: content, audiobuffer: audioBlob
       }, undefined, 'multipart/form-data')

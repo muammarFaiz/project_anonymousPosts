@@ -52,7 +52,7 @@ const CardsLogic = (cardslocation) => {
 
   const c = () => {
     let arr = []
-    if (homeCards.length === 0 || askCards === 'next') {
+    if (homeCards.length === 0) {
       arr.push(<h1 key={0}>Loadinggg...</h1>)
     } else {
       for (let i = 0; i < homeCards.length; i++) {
