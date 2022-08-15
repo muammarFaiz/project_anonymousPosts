@@ -122,7 +122,7 @@ export default function InputSecretLogic() {
         'alignleft aligncenter alignjustify alignright alignnone'
     }
   }
-  
+ 
   return {
     postSecret,
     dirty, setDirty,

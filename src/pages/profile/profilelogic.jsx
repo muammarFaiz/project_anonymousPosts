@@ -2,13 +2,16 @@ import { useEffect, useState } from "react"
 import req from "../../axiosSetup"
 import Card from "../../sections/cards/card"
 import { useSelector, useDispatch } from "react-redux"
-import { setDeleteSecretN, setPoststatus } from "../../reduxSlices/mainstates/mainstates"
+import { setDeleteSecretN, setPoststatus, setProfileBookmark } from "../../reduxSlices/mainstates/mainstates"
 
 export default function ProfileLogic() {
   const [secretArr, setSecretArr] = useState('')
   const [loading, setLoading] = useState('init')
   const [demandedPage, setDemandedPage] = useState(1)
   const [arrayOfPageNumber, setArrayOfPageNumber] = useState([])
+  const [content, setContent] = useState('posts')
+  const [nextButtonStatus, setNextButtonStatus] = useState('')
+  const [backbutton, setBackbutton] = useState('')
 
   const dispatch = useDispatch()
   const deleteSecretN = useSelector(state => state.memory.deleteSecretN)
@@ -19,18 +22,32 @@ export default function ProfileLogic() {
     if (loading === 'init' ||
       loading === 'secret deleted' ||
       loading === 'change page' ||
+      loading === 'bookmark' ||
+      loading === 'bookmark next' ||
+      loading === 'bookmark back' ||
       poststatus === 'secret posted'
     ) {
       const getUserSecrets = async () => {
-        const demandedPageNumber = demandedPage === 'init' ? 1 : demandedPage
-        const result = await req('usersecrets', 'POST', { paginationMode: 'on demand', page: demandedPageNumber })
+        let result
+        if(loading === 'bookmark' || loading === 'bookmark next' || loading === 'bookmark back') {
+          let indexid
+          if(loading === 'bookmark next') indexid = secretArr[secretArr.length - 1]._id
+          if(loading === 'bookmark back') indexid = secretArr[0]._id
+          result = await req('getbookmarks', 'POST', {startfrom: indexid, limit: 10, back: loading === 'bookmark back' ? true : false})
+        } else {
+          const demandedPageNumber = demandedPage === 'init' ? 1 : demandedPage
+          result = await req('usersecrets', 'POST', { paginationMode: 'on demand', page: demandedPageNumber })
+        }
+        console.log(result)
         if (result.result) {
           setSecretArr(result.result)
           if (!result.arrayOfPages) {
             alert('array of pages does not exist')
-          } else {
+          } else if(result.arrayOfPages !== 'bookmark') {
             setArrayOfPageNumber(result.arrayOfPages)
           }
+          setNextButtonStatus(result.nextbutton)
+          setBackbutton(result.backbutton)
         } else if (result !== 'empty') {
           alert('something is wrong, result key not found in server response')
         } else {
@@ -43,13 +60,14 @@ export default function ProfileLogic() {
       getUserSecrets()
     }
   }
-  useEffect(requestCardsDataProfile, [loading, demandedPage, poststatus, dispatch])
+  useEffect(requestCardsDataProfile, [loading, demandedPage, poststatus, dispatch, secretArr])
 
   const deleteSecret = async (n) => {
     setLoading(true)
     const result = await req('deletesecret', 'POST', {secretNumber: n})
     if(result === 'ok') {
       setLoading('secret deleted')
+      setContent('posts')
     } else {
       alert('failed to delete secret')
     }
@@ -91,10 +109,48 @@ export default function ProfileLogic() {
     }
   }
 
+  const gotoBookmark = () => {
+    if(content !== 'bookmark') {
+      setLoading('bookmark')
+      setContent('bookmark')
+    }
+  }
+
+  const gotoPosts = () => {
+    if(content !== 'posts') {
+      setLoading('init')
+      setContent('posts')
+    }
+  }
+
+  const bookmarkNext = () => {
+    setLoading('bookmark next')
+    setBackbutton(true)
+  }
+
+  const bookmarkBack = () => {
+    setLoading('bookmark back')
+  }
+
+  useEffect(() => {
+    if(content === 'bookmark') {
+      dispatch(setProfileBookmark(true))
+    } else {
+      dispatch(setProfileBookmark(false))
+    }
+  }, [content, dispatch])
+
   return {
     secretArr,
     loading,
     setPageGroup,
-    cardsForProfile
+    cardsForProfile,
+    content,
+    gotoBookmark,
+    gotoPosts,
+    bookmarkNext,
+    nextButtonStatus,
+    backbutton,
+    bookmarkBack
   }
 }

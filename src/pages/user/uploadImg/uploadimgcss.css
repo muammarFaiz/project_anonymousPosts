@@ -1,3 +1,6 @@
 .uploadimg-loading {
   background-color: rgb(253, 253, 97);
 }
+.user-pic img {
+  border-radius: 165px;
+}

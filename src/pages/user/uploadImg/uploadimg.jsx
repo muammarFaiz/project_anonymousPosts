@@ -7,8 +7,9 @@ export default function Uploadimg() {
   return (
     <>
       <div className="userPic-input">
-        <input type="file" onChange={logic.imgOnchange} accept='image/*' />
-        <button onClick={logic.sendImage}>Confirm</button>
+        <input type="file" onChange={logic.imgOnchange} accept='image/*' ref={logic.inputElement}
+          onKeyDown={logic.exit} />
+        <button onClick={logic.sendImage} onKeyDown={logic.exit}>Confirm</button>
       </div>
       {
         logic.specialLoading ?

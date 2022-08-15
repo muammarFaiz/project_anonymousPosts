@@ -15,3 +15,31 @@
 .card-upvote:hover, .card-downvote:hover {
   cursor: pointer;
 }
+.card-downvote {
+  margin-right: 40px;
+}
+.card-bmButton {
+  margin-right: 40px;
+}
+.card-bmButton:hover {
+  cursor: pointer;
+}
+.card-commentButton:hover {
+  cursor: pointer;
+}
+.card-secretContent {
+  max-height: 150px;
+  overflow: auto;
+}
+.card-userheader {
+  display: flex;
+  gap: 25px;
+}
+.card-userheader img {
+  height: 60px;
+  width: 60px;
+  border-radius: 35px;
+}
+.card-userheader p {
+  margin-top: 20px;
+}

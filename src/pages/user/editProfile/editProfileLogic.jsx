@@ -2,7 +2,8 @@ import { useRef } from "react"
 import { useState } from "react"
 import req from "../../../axiosSetup"
 import { useDispatch } from "react-redux/es/exports"
-import { setLoginStatus, setUserinfo } from "../../../reduxSlices/mainstates/mainstates"
+import { setLoginStatus, setShowEditProfile, setUserinfo } from "../../../reduxSlices/mainstates/mainstates"
+import { useEffect } from "react"
 
 export default function EditProfileLogic() {
   const [editProfileLoading, setEditProfileLoading] = useState('')
@@ -30,9 +31,19 @@ export default function EditProfileLogic() {
     }
     setEditProfileLoading(false)
   }
+
+  useEffect(() => {
+    inputElem.current.focus()
+  }, [])
+
+  const exit = (e) => {
+    if(e.key === 'Escape') dispatch(setShowEditProfile(false))
+  }
+
   return {
     changeUsername,
     editProfileLoading,
-    inputElem
+    inputElem,
+    exit
   }
 }

@@ -62,3 +62,18 @@
 .topnav-userimage:hover {
   cursor: pointer;
 }
+.editUsernameOrImg-background {
+  background-color: rgb(0, 0, 0, 0.4);
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+.editUsernameOrImg-wrapper {
+  background-color: aliceblue;
+  padding: 21px;
+}

@@ -7,6 +7,7 @@ import { mainLoadingSwitch, setPoststatus } from "../../reduxSlices/mainstates/m
 const CardsLogic = (cardslocation) => {
   const [homeCards, setHomeCards] = useState([])
   const [askCards, setAskCards] = useState('init')
+
   const dispatch = useDispatch()
 
   const poststatus = useSelector(state => state.memory.poststatus)

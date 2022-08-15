@@ -5,11 +5,12 @@
   gap: 10px;
 }
 .card {
-  padding: 0px 10px 5px;
+  padding: 13px;
   /* border: 1px solid black; */
   background-color: #EBF6F5;
-  max-height: 180px;
-  overflow: auto;
+  /* max-height: 180px; */
+  /* overflow: auto; */
+  border-radius: 13px;
 }
 .nextpageWrap {
   padding-left: 50px;

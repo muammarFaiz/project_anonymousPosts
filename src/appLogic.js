@@ -45,7 +45,23 @@ export default function AppLogic() {
     }
   }
 
+  const getimgname = async (arr) => {
+    console.log(arr)
+    let ids = []
+    arr.forEach(obj => {
+      if(obj.creatorId) {
+        if(!ids.includes(obj.creatorId)) ids.push(obj.creatorId)
+      } else if(obj.creator) {
+        if(!ids.includes(obj.creator)) ids.push(obj.creator)
+      }
+    });
+    console.log(ids)
+    const result = await req('getimgname', 'POST', {idarr: ids})
+    return result
+  }
+
   return {
-    capsPressed
+    capsPressed,
+    getimgname
   }
 }

@@ -12,7 +12,11 @@ export const memorySlice = createSlice({
     userImgSrc: '',
     userinfo: '',
     showChangeImg: '',
-    showEditProfile: ''
+    showEditProfile: '',
+    showTopnavDropdown: '',
+    refreshCommSect: '',
+    showauserinfo: '',
+    profileBookmark: ''
   },
   reducers: {
     mainLoadingSwitch: state => {
@@ -22,6 +26,7 @@ export const memorySlice = createSlice({
       state.loginStatus = action.payload
     },
     setMessageContent: (state, action) => {
+      // {title: 'something', description: 'some'}
       state.messageContent = action.payload
     },
     setDeleteSecretN: (state, action) => {
@@ -44,13 +49,26 @@ export const memorySlice = createSlice({
     },
     setShowEditProfile: (state, action) => {
       state.showEditProfile = action.payload
+    },
+    showTopnavDropdownSwitch: state => {
+      state.showTopnavDropdown = state.showTopnavDropdown ? false : true
+    },
+    setRefreshCommSect: (state, action) => {
+      state.refreshCommSect = action.payload
+    },
+    setShowauserinfo: (state, action) => {
+      state.showauserinfo = action.payload
+    },
+    setProfileBookmark: (state, action) => {
+      state.profileBookmark = action.payload
     }
   }
 })
 
 export const {
   mainLoadingSwitch, setLoginStatus, setMessageContent, setDeleteSecretN, setPoststatus, setCapslock,
-  setUserImgSrc, setUserinfo, setShowChangeImg, setShowEditProfile
+  setUserImgSrc, setUserinfo, setShowChangeImg, setShowEditProfile, showTopnavDropdownSwitch, setRefreshCommSect,
+  setShowauserinfo, setProfileBookmark
 } = memorySlice.actions
 
 const memoryReducer = memorySlice.reducer

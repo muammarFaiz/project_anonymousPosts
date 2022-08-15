@@ -1,17 +1,14 @@
 
 import { useSelector, useDispatch } from 'react-redux'
 import { setShowChangeImg, setShowEditProfile } from '../../reduxSlices/mainstates/mainstates'
-import EditProfile from './editProfile/editProfile'
-import Uploadimg from './uploadImg/uploadimg'
 import './usercss.css'
 import UserLogic from "./userlogic"
+import { RiPencilLine } from 'react-icons/ri'
 
 export default function User() {
   const logic = UserLogic()
   const userImgSrc = useSelector(state => state.memory.userImgSrc)
   const userinfo = useSelector(state => state.memory.userinfo)
-  const showChangeImg = useSelector(state => state.memory.showChangeImg)
-  const showEditProfile = useSelector(state => state.memory.showEditProfile)
   const dispatch = useDispatch()
 
   return (
@@ -19,20 +16,24 @@ export default function User() {
       <div className="fromServer">
         <img src={userImgSrc} alt="from server..." />
         <h2 className='userpage-username'>{userinfo.username}</h2>
+        <div className="user-aboutWrapper">
+          <p>About:</p>
+          {
+            logic.bioUpdate ?
+            <>
+              <textarea name="" id="" cols="30" rows="4" placeholder='Edit your bio...'
+                value={logic.bioContent} onChange={ev => logic.setBioContent(ev.target.value)}></textarea><br />
+              <button onClick={() => logic.saveBio(userinfo.bio)}>Save</button>
+              <button onClick={logic.cancelBioUpdate}>Cancel</button>
+            </> : userinfo.bio ?
+              <p>{userinfo.bio}</p> :
+              <p>Your bio is empty...</p>
+          }
+          {logic.bioUpdate ? '' : <button onClick={() => logic.updateBio(userinfo.bio)}><RiPencilLine /></button>}
+        </div>
         <p className="userpage-useremail">{userinfo.email}</p>
         <button className="userpage-changeusername" onClick={() => dispatch(setShowEditProfile(true))}>Change Username</button>
-        <button className="userpage-changephoto" onClick={() => dispatch(setShowChangeImg(true))}>Change Photo</button>
-        {
-          showChangeImg || showEditProfile ?
-            <div className="userpage-imageinputwrapper" onClick={logic.hideImgInput}>
-              <div className="userpage-imageinput" onClick={logic.removeBubling}>
-                {
-                  showChangeImg ? <Uploadimg /> : <EditProfile />
-                }
-                
-              </div>
-            </div> : ''
-        }
+        <button className="userpage-changephoto" onClick={() => dispatch(setShowChangeImg(true))}>Change Photo</button><br />
       </div>
     </div>
   )

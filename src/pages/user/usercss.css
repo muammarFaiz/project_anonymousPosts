@@ -22,3 +22,8 @@
   margin: auto;
   background-color: white;
 }
+
+.user-aboutWrapper {
+  max-width: 600px;
+  margin: 25px auto;
+}

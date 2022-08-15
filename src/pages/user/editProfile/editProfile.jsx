@@ -14,7 +14,8 @@ export default function EditProfile() {
         logic.editProfileLoading ?
           <p className="editprofile-showloading">{logic.editProfileLoading}</p> : ''
       }
-      <input type="text" ref={logic.inputElem} /><button onClick={logic.changeUsername}>Confirm</button>
+      <input type="text" ref={logic.inputElem} onKeyDown={logic.exit} />
+      <button onClick={logic.changeUsername} onKeyDown={logic.exit}>Confirm</button>
     </div>
   )
 }

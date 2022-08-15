@@ -2,6 +2,10 @@ import './topnavcss.css'
 import {Link, useNavigate} from 'react-router-dom';
 import Topnavlogic from './topnavlogic';
 import { useSelector } from 'react-redux';
+import DropdownUser from './dropdownuser/dropdownuser';
+import Uploadimg from '../../pages/user/uploadImg/uploadimg';
+import EditProfile from '../../pages/user/editProfile/editProfile';
+import UserinfoFloat from '../userinfoFloat/userinfoFloat';
 
 export default function Top_navigation(props) {
   const logic = Topnavlogic();
@@ -9,6 +13,10 @@ export default function Top_navigation(props) {
   const loginStatus = useSelector(state => state.memory.loginStatus)
   const capslock = useSelector(state => state.memory.capslock)
   const userImgSrc = useSelector(state => state.memory.userImgSrc)
+  const showTopnavDropdown = useSelector(state => state.memory.showTopnavDropdown)
+  const showChangeImg = useSelector(state => state.memory.showChangeImg)
+  const showEditProfile = useSelector(state => state.memory.showEditProfile)
+  const showauserinfo = useSelector(state => state.memory.showauserinfo)
 
   return (
     <>
@@ -26,8 +34,10 @@ export default function Top_navigation(props) {
             <Link to="/profile" className='loginButton buttonAnchor'>Profile</Link>
             <Link to="/#" className='buttonAnchor' onClick={logic.logout}>Logout</Link>
             <div className="topnav-userimage-wrapper">
-              <img src={userImgSrc} alt="" onClick={v => navigate('/user')} className='topnav-userimage' />
+              <img src={userImgSrc} alt="" onClick={logic.dropdownHandler} className='topnav-userimage' tabIndex={0}
+                onKeyDown={e => e.key === 'Enter' ? e.target.click() : null} />
             </div>
+            {showTopnavDropdown ? <DropdownUser /> : ''}
             </> :
               loginStatus === 'loading' ?
               <Link to="/#" className='buttonAnchor'>Loading user info...</Link> :
@@ -53,6 +63,23 @@ export default function Top_navigation(props) {
             <p>CapsLock is on</p>
           </div>
         </div> : ''
+      }
+      {
+        showChangeImg || showEditProfile ?
+          <div className="editUsernameOrImg-background" onClick={() => logic.closeChangeUsernameAndImg(showChangeImg)}>
+            <div className="editUsernameOrImg-wrapper" onClick={logic.noPropagate}>
+            {showChangeImg ? <Uploadimg /> : ''}
+            {showEditProfile ? <EditProfile /> : ''}
+            </div>
+          </div> : ''
+      }
+      {
+        showauserinfo ?
+          <div className="editUsernameOrImg-background" onClick={() => logic.closeShowauserinfo()}>
+            <div className="editUsernameOrImg-wrapper" onClick={logic.noPropagate}>
+              <UserinfoFloat />
+            </div>
+          </div> : ''
       }
     </div>
     </>

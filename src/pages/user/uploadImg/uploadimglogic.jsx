@@ -2,6 +2,7 @@ import { useRef, useState } from "react"
 import req from '../../../axiosSetup'
 import { useDispatch } from "react-redux"
 import { setShowChangeImg, setUserImgSrc } from "../../../reduxSlices/mainstates/mainstates"
+import { useEffect } from "react"
 
 const WIDTH = 300
 const HEIGHT = 300
@@ -11,6 +12,7 @@ export default function UploadImgLogic() {
   const [modifiedImg, setModifiedImg] = useState('')
   const [specialLoading, setSpecialLoading] = useState('')
   const dispatch = useDispatch()
+  const inputElement = useRef(null)
   
 
   const imgOnchange = v => {
@@ -66,11 +68,21 @@ export default function UploadImgLogic() {
 
   }
 
+  useEffect(() => {
+    inputElement.current.focus()
+  }, [])
+
+  const exit = (e) => {
+    if(e.key === 'Escape') dispatch(setShowChangeImg(false))
+  }
+
   return {
     imgOnchange,
     sendImage,
     imgPreview,
     getFromServer,
-    specialLoading
+    specialLoading,
+    inputElement,
+    exit
   }
 }

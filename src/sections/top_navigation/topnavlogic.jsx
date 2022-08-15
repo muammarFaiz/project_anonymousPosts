@@ -1,6 +1,6 @@
 import req from "../../axiosSetup";
 import { useSelector, useDispatch } from "react-redux/es/exports";
-import { setLoginStatus, setUserImgSrc } from "../../reduxSlices/mainstates/mainstates";
+import { setLoginStatus, setShowauserinfo, setShowChangeImg, setShowEditProfile, setUserImgSrc, setUserinfo, showTopnavDropdownSwitch } from "../../reduxSlices/mainstates/mainstates";
 
 export default function Topnavlogic() {
   const mainLoading = useSelector(state => state.memory.mainLoading)
@@ -11,6 +11,7 @@ export default function Topnavlogic() {
     if(result === 'token deleted' || result === 'token null') {
       dispatch(setLoginStatus(''))
       dispatch(setUserImgSrc(''))
+      dispatch(setUserinfo(''))
       localStorage.removeItem('token')
       if(result === 'token null') alert('token null')
       alert('logout success')
@@ -20,8 +21,32 @@ export default function Topnavlogic() {
     }
   }
 
+  const dropdownHandler = () => {
+    dispatch(showTopnavDropdownSwitch())
+  }
+
+  const closeChangeUsernameAndImg = (changeimg) => {
+    if(changeimg) {
+      dispatch(setShowChangeImg(false))
+    } else {
+      dispatch(setShowEditProfile(false))
+    }
+  }
+
+  const noPropagate = (e) => {
+    e.stopPropagation()
+  }
+
+  const closeShowauserinfo = () => {
+    dispatch(setShowauserinfo(false))
+  }
+
   return {
     logout,
-    mainLoading
+    mainLoading,
+    dropdownHandler,
+    closeChangeUsernameAndImg,
+    noPropagate,
+    closeShowauserinfo
   }
 }
