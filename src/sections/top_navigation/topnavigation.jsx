@@ -1,7 +1,8 @@
 import './topnavcss.css'
 import {Link, useNavigate} from 'react-router-dom';
-import Topnavlogic from './topnavlogic';
 import { useSelector } from 'react-redux';
+import { AiOutlineArrowUp } from 'react-icons/ai'
+import Topnavlogic from './topnavlogic';
 import DropdownUser from './dropdownuser/dropdownuser';
 import Uploadimg from '../../pages/user/uploadImg/uploadimg';
 import EditProfile from '../../pages/user/editProfile/editProfile';
@@ -81,6 +82,9 @@ export default function Top_navigation(props) {
             </div>
           </div> : ''
       }
+        <button onClick={logic.gotophandler} style={{ display: logic.gotopdisplay }} className='topnav-topbutton'>
+          <AiOutlineArrowUp size={25} />
+        </button>
     </div>
     </>
   )

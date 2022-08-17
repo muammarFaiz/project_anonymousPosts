@@ -1,10 +1,13 @@
 import req from "../../axiosSetup";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 import { setLoginStatus, setShowauserinfo, setShowChangeImg, setShowEditProfile, setUserImgSrc, setUserinfo, showTopnavDropdownSwitch } from "../../reduxSlices/mainstates/mainstates";
+import { useState } from "react";
 
 export default function Topnavlogic() {
-  const mainLoading = useSelector(state => state.memory.mainLoading)
+  const [gotopdisplay, setgotopdisplay] = useState('none')
+
   const dispatch = useDispatch()
+  const mainLoading = useSelector(state => state.memory.mainLoading)
 
   const logout = async (val) => {
     const result = await req('logout', 'GET')
@@ -41,12 +44,27 @@ export default function Topnavlogic() {
     dispatch(setShowauserinfo(false))
   }
 
+  window.onscroll = () => {
+    const topscroll = document.documentElement.scrollTop
+    if(topscroll >= 285) {
+      if(gotopdisplay !== 'block') setgotopdisplay('block')
+    } else {
+      if(gotopdisplay !== 'none') setgotopdisplay('none')
+    }
+  }
+  
+  const gotophandler = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+  }
+
   return {
     logout,
     mainLoading,
     dropdownHandler,
     closeChangeUsernameAndImg,
     noPropagate,
-    closeShowauserinfo
+    closeShowauserinfo,
+    gotopdisplay,
+    gotophandler
   }
 }

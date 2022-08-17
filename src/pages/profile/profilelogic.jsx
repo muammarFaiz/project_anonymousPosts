@@ -49,7 +49,8 @@ export default function ProfileLogic() {
           setNextButtonStatus(result.nextbutton)
           setBackbutton(result.backbutton)
         } else if (result !== 'empty') {
-          alert('something is wrong, result key not found in server response')
+          alert('something is wrong, server error')
+          console.log(result)
         } else {
           setSecretArr([])
           setArrayOfPageNumber([])
@@ -61,6 +62,10 @@ export default function ProfileLogic() {
     }
   }
   useEffect(requestCardsDataProfile, [loading, demandedPage, poststatus, dispatch, secretArr])
+
+  useEffect(() => {
+    window.scrollTo({top: 0, left: 0})
+  }, [])
 
   const deleteSecret = async (n) => {
     setLoading(true)

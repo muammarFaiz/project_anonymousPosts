@@ -29,7 +29,6 @@ export default function InputSecretLogic() {
         dispatch(setMessageContent({title: 'denied', description: 'there is nothing to send'}))
         return
       }
-      console.log(content.length)
       if(content.length > 500) {
         dispatch(mainLoadingSwitch())
         dispatch(setMessageContent({title: 'denied', description: 'content too long, reduce the content or its styling'}))
@@ -44,14 +43,14 @@ export default function InputSecretLogic() {
         editorRef.current.setDirty(false)
 
       } else if (result === 'rejected') {
-        alert('you are not logged in')
+        dispatch(setMessageContent({title: 'rejected', description: 'you are not logged in'}))
       } else if(result.error) {
-        alert(result.error.errors[0].msg)
+        dispatch(setMessageContent({title: 'error', description: result.error.errors[0].msg}))
       } else {
-        alert('failed to create post')
+        dispatch(setMessageContent({title: 'fail', description: 'failed to create post'}))
       }
     } else {
-      alert('editor is not loaded')
+      dispatch(setMessageContent({title: 'rejected', description: 'editor is not loaded'}))
     }
     dispatch(mainLoadingSwitch())
   }

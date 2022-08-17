@@ -25,6 +25,9 @@ const CardsLogic = (cardslocation) => {
     poststatus === 'secret posted') {
       const runthis = async () => {
         dispatch(mainLoadingSwitch())
+        if (poststatus === 'secret posted') {
+          setHomeCards([])
+        }
         const result = await req('getsecrets', 'GET', undefined, query)
         if(result.result) {
           if (poststatus === 'secret posted') {
