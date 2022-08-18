@@ -19,8 +19,13 @@ export const memorySlice = createSlice({
     profileBookmark: ''
   },
   reducers: {
-    mainLoadingSwitch: state => {
-      state.mainLoading = state.mainLoading ? false : true
+    mainLoadingSwitch: (state, action) => {
+      console.log(action)
+      if(action.payload) {
+        state.mainLoading = action.payload.force === 'on' ? true : false
+      } else {
+        state.mainLoading = state.mainLoading ? false : true
+      }
     },
     setLoginStatus: (state, action) => {
       state.loginStatus = action.payload

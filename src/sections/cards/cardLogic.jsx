@@ -90,6 +90,14 @@ export default function CardLogic(props) {
     setCommSect(prev => prev ? false : true)
   }
 
+  const checkauser = () => {
+    if(!loginStatus || loginStatus === 'rejected') {
+      dispatch(setMessageContent({title: 'rejected', description: 'you need to login'}))
+    } else {
+      dispatch(setShowauserinfo(props.card.creatorId))
+    }
+  }
+  
   const getimg = (st, userinfoarr) => {
     const imgarr = userinfoarr.find(obj => obj._id === props.card.creatorId)
     if(st === 'img') {
@@ -101,14 +109,6 @@ export default function CardLogic(props) {
     // if(st === 'img') return 'fail'
     if(st === 'name') return imgarr.username
     // if(st === 'name') return 'fail'
-  }
-
-  const checkauser = () => {
-    if(!loginStatus || loginStatus === 'rejected') {
-      dispatch(setMessageContent({title: 'rejected', description: 'you need to login'}))
-    } else {
-      dispatch(setShowauserinfo(props.card.creatorId))
-    }
   }
 
   const showCreator = () => {
@@ -128,9 +128,11 @@ export default function CardLogic(props) {
   }
 
   useEffect(() => {
+    // console.log('get image is running')
     const runme = async () => {
       const result = await req('getimgname', 'POST', { idarr: [props.card.creatorId] })
       setCreatorImg(result)
+      // console.log(result)
     }
     runme()
   }, [props.card.creatorId])

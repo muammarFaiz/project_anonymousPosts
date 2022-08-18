@@ -41,11 +41,9 @@ export default function App() {
                   loginStatus === 'ok' ?
                   <>
                     <Route path='profile' element={<Profile />} />
-                    <Route path='user' element={<User />} />
                   </> :
                   <>
                     <Route path="login" element={<Login />} />
-                    <Route path="register" element={<Register />} />
                   </>
                 }
                 <Route path="*" element={<Navigate to={'/'} />} />
@@ -57,3 +55,28 @@ export default function App() {
   )
 }
 ```
+3. in the appLogic.js a useeffect is used to get the token stored in the browser and verify it to the server, also to get user image if the token is verified, also other functions that i might use for other elments because the return of appLogic will be used as context that cover all the other components but it is not a good idea since appLogic should exclusive to App element, it is better to use a separate logic file for a global logic to avoid unexpected behavior.
+```js
+useEffect( () => {
+  const token = localStorage.getItem('token')
+  if(token) {
+    // verify token to the server
+  } else {
+    // do something when the user does not have token
+  }
+}, [])
+useEffect( () => {
+  // get image of login status is accepted, i use separete useeffect for this because the first useeffect only run once to check if the user already logged in or not, but this useeffect will run anytime the loginstatus change
+}, [loginStatus])
+```
+4. the axiosSetup.js created to simplify the axios requests with simple error handling so i can use this: `await req('route', ...)` instead of this:
+```js
+try {
+  const result = await axios({
+    ...
+  })
+} catch(err) {
+  ...
+}
+```
+5. 

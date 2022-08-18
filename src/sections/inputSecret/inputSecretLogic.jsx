@@ -41,7 +41,6 @@ export default function InputSecretLogic() {
         dispatch(setPoststatus('secret posted'))
         setDirty(false)
         editorRef.current.setDirty(false)
-
       } else if (result === 'rejected') {
         dispatch(setMessageContent({title: 'rejected', description: 'you are not logged in'}))
       } else if(result.error) {
