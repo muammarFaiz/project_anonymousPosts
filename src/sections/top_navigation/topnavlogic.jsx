@@ -1,6 +1,6 @@
 import req from "../../axiosSetup";
 import { useSelector, useDispatch } from "react-redux/es/exports";
-import { setLoginStatus, setShowauserinfo, setShowChangeImg, setShowEditProfile, setUserImgSrc, setUserinfo, showTopnavDropdownSwitch } from "../../reduxSlices/mainstates/mainstates";
+import { mainLoadingSwitch, setLoginStatus, setShowauserinfo, setShowChangeImg, setShowEditProfile, setUserImgSrc, setUserinfo, showTopnavDropdownSwitch } from "../../reduxSlices/mainstates/mainstates";
 import { useState } from "react";
 
 export default function Topnavlogic() {
@@ -10,6 +10,7 @@ export default function Topnavlogic() {
   const mainLoading = useSelector(state => state.memory.mainLoading)
 
   const logout = async (val) => {
+    dispatch(mainLoadingSwitch())
     const result = await req('logout', 'GET')
     if(result === 'token deleted' || result === 'token null') {
       dispatch(setLoginStatus(''))
@@ -17,11 +18,11 @@ export default function Topnavlogic() {
       dispatch(setUserinfo(''))
       localStorage.removeItem('token')
       if(result === 'token null') alert('token null')
-      alert('logout success')
     } else {
       console.log(result)
       alert('something is wrong')
     }
+    dispatch(mainLoadingSwitch())
   }
 
   const dropdownHandler = () => {

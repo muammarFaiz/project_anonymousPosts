@@ -128,11 +128,9 @@ export default function CardLogic(props) {
   }
 
   useEffect(() => {
-    // console.log('get image is running')
     const runme = async () => {
       const result = await req('getimgname', 'POST', { idarr: [props.card.creatorId] })
       setCreatorImg(result)
-      // console.log(result)
     }
     runme()
   }, [props.card.creatorId])
