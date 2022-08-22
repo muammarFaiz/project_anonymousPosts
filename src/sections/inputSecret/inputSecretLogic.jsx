@@ -44,7 +44,9 @@ export default function InputSecretLogic() {
       } else if (result === 'rejected') {
         dispatch(setMessageContent({title: 'rejected', description: 'you are not logged in'}))
       } else if(result.error) {
-        dispatch(setMessageContent({title: 'error', description: result.error.errors[0].msg}))
+        dispatch(setMessageContent({
+          title: 'error', description: result.error.errors ? result.error.errors[0].msg : result.error
+        }))
       } else {
         dispatch(setMessageContent({title: 'fail', description: 'failed to create post'}))
       }

@@ -34,9 +34,10 @@ export default function RegisterLogic() {
       if(result === 'ok') {
         navigate('/login')
       } else {
+        console.log(result)
         dispatch(setMessageContent({
-          title: `value: ${result.errors[0].value}`,
-          description: result.errors[0].msg
+          title: `value: ${result.error.errors[0].value}`,
+          description: result.error.errors[0].msg
         }))
       }
       dispatch(mainLoadingSwitch())

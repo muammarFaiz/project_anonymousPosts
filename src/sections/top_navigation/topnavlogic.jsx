@@ -10,7 +10,7 @@ export default function Topnavlogic() {
   const mainLoading = useSelector(state => state.memory.mainLoading)
 
   const logout = async (val) => {
-    dispatch(mainLoadingSwitch())
+    dispatch(mainLoadingSwitch({desc: 'logout'}))
     const result = await req('logout', 'GET')
     if(result === 'token deleted' || result === 'token null') {
       dispatch(setLoginStatus(''))
@@ -22,7 +22,7 @@ export default function Topnavlogic() {
       console.log(result)
       alert('something is wrong')
     }
-    dispatch(mainLoadingSwitch())
+    dispatch(mainLoadingSwitch({desc: 'logout'}))
   }
 
   const dropdownHandler = () => {

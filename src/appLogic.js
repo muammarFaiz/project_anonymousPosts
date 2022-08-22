@@ -30,7 +30,11 @@ export default function AppLogic() {
     if(loginStatus === 'ok') {
       const getImgFromServer = async () => {
         const result = await req('userimage', 'GET')
-        dispatch(setUserImgSrc('data:' + result.mimetype + ';base64,' + result.base64))
+        if(result === 'none') {
+          dispatch(setUserImgSrc(''))
+        } else {
+          dispatch(setUserImgSrc('data:' + result.mimetype + ';base64,' + result.base64))
+        }
       }
       getImgFromServer()
     }

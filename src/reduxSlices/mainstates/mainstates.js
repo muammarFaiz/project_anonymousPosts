@@ -22,7 +22,11 @@ export const memorySlice = createSlice({
     mainLoadingSwitch: (state, action) => {
       console.log(action)
       if(action.payload) {
-        state.mainLoading = action.payload.force === 'on' ? true : false
+        if (action.payload.force) {
+          state.mainLoading = action.payload.force === 'on' ? true : false
+        } else {
+          state.mainLoading = state.mainLoading ? false : true
+        }
       } else {
         state.mainLoading = state.mainLoading ? false : true
       }
