@@ -46,7 +46,7 @@ const CardsLogic = (cardslocation) => {
           } else {
             alert('failed in retreiving secrets')
           }
-          dispatch(mainLoadingSwitch())
+          dispatch(mainLoadingSwitch({desc: 'cards', force: 'off'}))
         }
         runthis()
       }

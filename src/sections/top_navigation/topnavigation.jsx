@@ -29,6 +29,7 @@ export default function Top_navigation(props) {
           }}>R</h1>
         </div>
         <div className="loginReg">
+          <button className='topnav-info buttonAnchor' onClick={logic.showInfo}>Info</button>
           {
             loginStatus === 'ok' ?
             <>

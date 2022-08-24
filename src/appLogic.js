@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import req from "./axiosSetup";
 import { useDispatch, useSelector } from "react-redux";
 import { setCapslock, setLoginStatus, setUserImgSrc, setUserinfo } from "./reduxSlices/mainstates/mainstates";
+import drawProfileImg from "./drawProfileImg";
 
 export default function AppLogic() {
   const dispatch = useDispatch()
@@ -31,7 +32,8 @@ export default function AppLogic() {
       const getImgFromServer = async () => {
         const result = await req('userimage', 'GET')
         if(result === 'none') {
-          dispatch(setUserImgSrc(''))
+          const webpimg = drawProfileImg()
+          dispatch(setUserImgSrc(webpimg))
         } else {
           dispatch(setUserImgSrc('data:' + result.mimetype + ';base64,' + result.base64))
         }

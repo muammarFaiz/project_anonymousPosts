@@ -4,7 +4,7 @@
   /* border: 1px solid red; */
   padding: 0px 20px;
   /* border-bottom: 5px solid black; */
-  background-color: #AD2DA9;
+  background-color: #932dadc2;
   color: #E0D4AD;
 }
 .buttonAnchor {
@@ -84,4 +84,11 @@
   padding: 10px;
   background-color: #36AD9E;
   border-radius: 50%;
+}
+.topnav-topbutton:hover {
+  cursor: pointer;
+}
+.topnav-info {
+  background: none;
+  border: none;
 }

@@ -1,6 +1,6 @@
 import req from "../../axiosSetup";
 import { useSelector, useDispatch } from "react-redux/es/exports";
-import { mainLoadingSwitch, setLoginStatus, setShowauserinfo, setShowChangeImg, setShowEditProfile, setUserImgSrc, setUserinfo, showTopnavDropdownSwitch } from "../../reduxSlices/mainstates/mainstates";
+import { mainLoadingSwitch, setLoginStatus, setMessageContent, setShowauserinfo, setShowChangeImg, setShowEditProfile, setUserImgSrc, setUserinfo, showTopnavDropdownSwitch } from "../../reduxSlices/mainstates/mainstates";
 import { useState } from "react";
 
 export default function Topnavlogic() {
@@ -58,6 +58,10 @@ export default function Topnavlogic() {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }
 
+  const showInfo = () => {
+    dispatch(setMessageContent({title: 'info', description: 'max users: 40, max sercrets per user: 50'}))
+  }
+
   return {
     logout,
     mainLoading,
@@ -66,6 +70,7 @@ export default function Topnavlogic() {
     noPropagate,
     closeShowauserinfo,
     gotopdisplay,
-    gotophandler
+    gotophandler,
+    showInfo
   }
 }

@@ -5,7 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #DB97E0;
+  background-color: #b6b6b6;
+  background-image: url("crissxcross.png");
 }
 
 code {
